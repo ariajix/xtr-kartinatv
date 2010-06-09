@@ -27,7 +27,7 @@ class Channel {
     var $number;
     var $id;
     var $name;
-
+    var $color;//take it from category
     var $program;
     var $beginTime;
     var $endTime;

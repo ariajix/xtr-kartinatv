@@ -9,7 +9,7 @@ require_once "ktvFunctions.inc";
 
 
 
-displayRssHeader("xTreamer cathegory list for Kartina.TV");
+displayRssHeader("xTreamer category list for Kartina.TV");
 
 # decide whether chanels list update is needed
 if (! isset($_SESSION['channelsList']) || ! isset($_SESSION['lastUpdate']) ||

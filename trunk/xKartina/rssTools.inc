@@ -14,64 +14,57 @@ function displayRssFooter()
 echo '</channel>';
 echo '</rss>';
 }
-
+function formatColor($color) {
+	//return "255:0:0";
+	return hexdec(substr($color, 1,2)) .':'.hexdec(substr($color, 3,2)).':'.hexdec(substr($color, 5,2)); 
+}
 function displayCategory($category) {
 	$catItem = "";
 	$catItem = '<item>';
 	$catItem .= '<title>'. $category->name .'</title>';
-	$catItem .=  '<link>'.XK_HOME.'showCathegory.php?id='.$category->id.'</link>';
-	$catItem .= '<media:thumbnail url="'.XK_HOME.'img/cat_5.png" />';
-//	$catItem .= '<mediaDisplay name=2MenusNColumnsView ></mediaDisplay>';		 
+	$catItem .=  '<link>'.XK_HOME.'showCategory.php?id='.$category->id.'</link>';
+	$catItem .= '<media:thumbnail url="'.XK_HOME.'img/cat.png" />';
       
-	$catItem .=  '<mediaDisplay name=threePartsView
-	sideColorLeft="0:0:0"
-	sideColorRight="0:0:0"
-	backgroundColor="0:0:0"
-	itemBackgroundColor="0:0:0"
-	popupBorderColor="0:0:0"
-	
-	sideLeftWidthPC="0"
-	sideRightWidthPC="0"
-	
-	headerXPC="14"
-	headerYPC="3"
-	headerWidthPC="95"
-	
-	itemImageXPC="1"
-	itemImageYPC="18"
-	itemImageWidthPC="10"
-	itemImageHeightPC="10"
-	
-	itemXPC="12"
-	itemYPC="18"
-	itemWidthPC="75"
-	itemHeightPC="10"
-	
-	menuXPC="5"
-	menuWidthPC="15"
-	
-	capXPC="100"
-	capYPC="10"
-	capHeightPC="10"
-	
-	headerCapXPC="90"
-	headerCapYPC="10"
-	headerCapWidthPC="0"
-    
-    showDefaultInfo=yes
-	fontSize="10"
-	
-	bottomYPC="10"
-	infoYPC="90"
-	popupXPC="7"
-	popupWidthPC="15"
-  >
-		<idleImage>image/POPUP_LOADING_01.jpg</idleImage>
+	$catItem .=  '	<mediaDisplay name="threePartsView" 
+					showHeader="yes" 
+					headerXPC="20"
+					headerYPC="3"
+					showDefaultInfo="yes"
+				
+					imageLeftSide="image/MVIX_LIVE_MAIN_BG_2.jpg" 
+					sideLeftWidthPC="10" 
+					sideRightWidthPC="0" 
+					sideColorRight="0:0:0" 
+					sideColorLeft="0:0:0" 
+					
+					itemImageXPC="12" 
+					itemImageYPC="14" 
+					itemImageHeightPC="8" 
+					itemImageWidthPC="8" 
+				
+					drawItemText="yes"
+					slidingItemText="yes"
+
+					itemGap="0"
+					itemXPC="20" 
+					itemYPC="14" 
+					itemHeightPC="8" 
+					itemWidthPC="70" 
+					itemPerPage="10" 
+					fontSize="12"
+					idleImageXPC="45" 
+					idleImageYPC="42" 
+					idleImageWidthPC="10" 
+					idleImageHeightPC="15" 
+					viewAreaWidthPC="100"
+					infoYPC="95"
+					>	  
+        <idleImage>image/POPUP_LOADING_01.jpg</idleImage>
         <idleImage>image/POPUP_LOADING_02.jpg</idleImage>
         <idleImage>image/POPUP_LOADING_03.jpg</idleImage>
         <idleImage>image/POPUP_LOADING_04.jpg</idleImage>
         <idleImage>image/POPUP_LOADING_05.jpg</idleImage>
-        <idleImage>image/POPUP_LOADING_06.jpg</idleImage>  
+        <idleImage>image/POPUP_LOADING_06.jpg</idleImage>
   </mediaDisplay>';
 	$catItem .=  '</item>';
 	
@@ -120,12 +113,15 @@ function displayChannel($channel)
     # now the entry itself
 	$chanelItem = "";
 	$chanelItem = '<item>';
-	$chanelItem .= '<title>'. $name .' / '.$channel->program.'('.$time.')</title>';
-	$chanelItem .= '<description>'.  $name . '[' . $time . ']</description>';
+	$chanelItem .= '<title>'.$channel->program.' ('.$time.')</title>';
+	$chanelItem .= '<description>'.  $name . ' [' . $time . ']<b>bold</b><br/>line</description>';
 	$chanelItem .= '<link>'.XK_HOME.$linkUrl.'</link>';
-	$chanelItem .= '<pubDate>'. $channel->program.'<br/>('.$time.')</pubDate>';	
+	$chanelItem .= '<pubDate>'. $name .' [' . $time . ']: '. $channel->program.'<br/>('.$time.')</pubDate>';	
 	$chanelItem .= '<enclosure url="'.XK_HOME.$linkUrl.'" type="video/mp4" />';
 	$chanelItem .= '<media:thumbnail url="'. $logo . '" />';
+	$chanelItem .=  '<mediaDisplay name=threePartsView
+					backgroundColor="' . formatColor($category->color) . '"
+					/>';  
 	$chanelItem .= '</item>';
 	
 	return $chanelItem;
