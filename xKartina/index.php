@@ -10,9 +10,9 @@
 ?>
 <html>
 <body>
-<a href = "cathegoryList.php">cathegoryList.php</a>
+<a href = "categoryList.php">categoryList.php</a>
 <a href = "channelsList.php">channelsList.php</a>
-<a href = "showCathegory.php?id=1">Cathegory 1</a>
+<a href = "showCategory.php?id=1">Category 1</a>
 <a href = "playChannel.php?d=0&id=7&number=1&title=%D0%A0%D0%B5%D0%BD%D0%A2%D0%92&vid=1">RenTv</a>
 
 <a href = "playlist.php">playlist</a>

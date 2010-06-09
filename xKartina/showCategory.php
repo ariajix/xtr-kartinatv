@@ -29,32 +29,34 @@ if (! isset($_SESSION['channelsList']) || ! isset($_SESSION['lastUpdate']) ||
 # parse raw list into prepared class hierarchy
 $channelsParser = new EregChannelsParser();
 $channelsParser->parse($rawList);
-$channelsParser->selectedChannel = $_SESSION['selectedChannel'];
+#$channelsParser->selectedChannel = $_SESSION['selectedChannel'];
 
 
 
 $itemsToDisplay     = array(); # itmes to be displayed on page
-$firstChannelNumber = 0;       # first displayed channel on page
-$lastChannelNumber  = 0;       # last displayed channel on page
-$currentEntry       = 0;
-$foundSelected      = false;
-$limit = CL_ITEMS_PER_PAGE;
-$cathegoryId = $_GET['id'];
+//$firstChannelNumber = 0;       # first displayed channel on page
+//$lastChannelNumber  = 0;       # last displayed channel on page
+//$currentEntry       = 0;
+//$foundSelected      = false;
+//$limit = CL_ITEMS_PER_PAGE;
+$categoryId = $_GET['id'];
 foreach ($channelsParser->categories as $category) {
 //    $itemsToDisplay[] = $category;
 //    $currentEntry++;
-    if($category->id == $cathegoryId) {
+    if($category->id == $categoryId || $categoryId == null) {
 	    foreach ($category->channels as $channel) {
+	    	$channel->$color = $category->$color;
 	        $itemsToDisplay[] = $channel;
-	        $currentEntry++;
+//	        $currentEntry++;
 	    }
     }
 }
 # display collected items
+$cnt=1;
+for($i=0;$i<$cnt;$i++) {
 foreach ($itemsToDisplay as $item) {
-	
     echo   displayChannel($item);
-	
+}
 }
 displayRssFooter();
 ?>
