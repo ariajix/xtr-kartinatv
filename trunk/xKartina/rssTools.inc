@@ -113,7 +113,12 @@ function displayChannel($channel)
     # now the entry itself
 	$chanelItem = "";
 	$chanelItem = '<item>';
-	$chanelItem .= '<title>'.$channel->program.' ('.$time.')</title>';
+	$title = "";
+	if(isset($channel->program)) {
+		$title = '['.$time.']   '. $channel->program;
+	}
+	$chanelItem .= '<title>'.$title.'</title>';
+	
 	$chanelItem .= '<description>'.  $name . ' [' . $time . ']<b>bold</b><br/>line</description>';
 	$chanelItem .= '<link>'.XK_HOME.$linkUrl.'</link>';
 	$chanelItem .= '<pubDate>'. $name .' [' . $time . ']: '. $channel->program.'<br/>('.$time.')</pubDate>';	

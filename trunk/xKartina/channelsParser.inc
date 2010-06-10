@@ -211,6 +211,13 @@ class EregChannelsParser extends AbstractParser {
                 $this->categories[] = $category;
 			}
 			if(strstr ($v,"channel ")) {
+				$matches_id = null;
+				$matches_name = null;
+				$matches_idx = null;
+				$matches_programm = null;
+				$matches_sprog = null;
+				$matches_eprog =  null;
+								
 				ereg('id="([^"]*)"', $v, $matches_id);
 				ereg('title="([^"]*)"', $v, $matches_name);
 				ereg('idx="([^"]*)"', $v, $matches_idx);

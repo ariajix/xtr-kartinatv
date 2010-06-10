@@ -45,7 +45,9 @@ foreach ($channelsParser->categories as $category) {
 //    $currentEntry++;
     if($category->id == $categoryId || $categoryId == null) {
 	    foreach ($category->channels as $channel) {
-	    	$channel->$color = $category->$color;
+	    	if(null != $category->color) {
+	    		$channel->color = $category->color;
+	    	}
 	        $itemsToDisplay[] = $channel;
 //	        $currentEntry++;
 	    }
