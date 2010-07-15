@@ -1,0 +1,14 @@
+﻿#EXTM3U
+#EXTINF:221,Queen - Bohemian Rhapsody
+Titel 1.mp3
+#EXTINF:473,Dire Straits - Walk Of Life
+Pop\Meine Auswahl\Titel 2.ogg
+#EXTINF:264,test
+C:\Dokumente und Einstellungen\All Users\Dokumente\Eigene Musik\Titel irgendeinenummer.flac
+#EXTINF:504,Bob Marley - Buffalo Soldier
+http://www.seite.invalid/musik/titel4.mp3
+http://www.seite.invalid/musik/titel2.mp3
+#EXTINF:-1,über hüber öber häber
+http://www.seite.invalid/musik/titel3.mp3
+#EXTINF:4,тест тест тест
+http://www.seite.invalid/musik/titel6.mp3
