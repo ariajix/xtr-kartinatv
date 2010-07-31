@@ -68,7 +68,6 @@
 
 					url = getItemInfo(index, "epg_link");				
 					jumpToLink("epg_link");
-					description = url;
 					redrawDisplay();
 					"true";
 
@@ -104,6 +103,7 @@
 					backgroundColor="-1:-1:-1" foregroundColor="0:154:205">
 				<script>
 					description;
+					
 				</script>
 			</text>
 		</backgroundDisplay>

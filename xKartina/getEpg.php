@@ -19,9 +19,10 @@ $arcTime = isset($_GET['archiveTime']) ? $_GET['archiveTime'] : $nowTime;
 
 function getTime($program, $ignoreTimeShift = false) {
     # time shift will be taken directly from channel name
-    $timeShift = $ignoreTimeShift || 1 != preg_match('/^.* -(\d+)$/', $_GET['title'], $m) ? 
-        0 : $m[1];
-    return $program->beginTime + $timeShift * 60 * 60 + TIME_ZONE_SECONDS;
+    
+    //$timeShift = $ignoreTimeShift || 1 != preg_match('/^.* -(\d+)$/', $_GET['title'], $m) ? 0 : $m[1];
+    //return $program->beginTime + $timeShift * 60 * 60 + TIME_ZONE_SECONDS;
+    return $program->beginTime;
 }
 
 function getEpg($id, $date) {
@@ -184,8 +185,8 @@ function displayProgram($program, $nowTime, $hasArchive, $openRef, $currentProgr
 
     # generate title
     $totalPages = $page + 1;
-    $title  = $_GET['title'] . "   (" . LANG_EPG_FROM . " ";
-    $title .= formatDate('d.m', $arcTime - EPG_START_OFFSET);
+    //$title  = $_GET['title'] . "   (" . LANG_EPG_FROM . " ";
+    $title = formatDate('d.m', $arcTime - EPG_START_OFFSET);
 
     # show pages only if there are more than one
     if ($totalPages > 1) {
@@ -222,7 +223,7 @@ function displayProgram($program, $nowTime, $hasArchive, $openRef, $currentProgr
 	    $openRef, $currentProgram);
 	}
 	*/
-    echo "hhehehe";
+    
 		echo drawEpgTemplate($programs, $nowTime, $parser->hasArchive,
 	    $openRef, $currentProgram);
 /*    
