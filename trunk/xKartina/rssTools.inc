@@ -1,135 +1,178 @@
 <?php
-function displayRssHeader($title = "xTreamer Kartina.TV plugin", 
-    $refreshTime = 0, $fontSize = FONT_SIZE) 
-{
-header("Content-type: text/xml");
-echo"<?xml version='1.0' ?>";
-echo '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">';
-echo '<channel>';
-echo '<menu></menu>';
-}
 
-function displayRssFooter()
-{
-echo '</channel>';
-echo '</rss>';
-}
 function formatColor($color) {
 	//return "255:0:0";
 	return hexdec(substr($color, 1,2)) .':'.hexdec(substr($color, 3,2)).':'.hexdec(substr($color, 5,2)); 
 }
-function displayCategory($category) {
-	$catItem = "";
-	$catItem = '<item>';
-	$catItem .= '<title>'. $category->name .'</title>';
-	$catItem .=  '<link>'.XK_HOME.'showCategory.php?id='.$category->id.'</link>';
-	$catItem .= '<media:thumbnail url="'.XK_HOME.'img/cat.png" />';
-      
-	$catItem .=  '	<mediaDisplay name="threePartsView" 
-					showHeader="yes" 
-					headerXPC="20"
-					headerYPC="3"
-					showDefaultInfo="yes"
-				
-					imageLeftSide="image/MVIX_LIVE_MAIN_BG_2.jpg" 
-					sideLeftWidthPC="10" 
-					sideRightWidthPC="0" 
-					sideColorRight="0:0:0" 
-					sideColorLeft="0:0:0" 
-					
-					itemImageXPC="12" 
-					itemImageYPC="14" 
-					itemImageHeightPC="8" 
-					itemImageWidthPC="8" 
-				
-					drawItemText="yes"
-					slidingItemText="yes"
-
-					itemGap="0"
-					itemXPC="20" 
-					itemYPC="14" 
-					itemHeightPC="8" 
-					itemWidthPC="70" 
-					itemPerPage="10" 
-					fontSize="12"
-					idleImageXPC="45" 
-					idleImageYPC="42" 
-					idleImageWidthPC="10" 
-					idleImageHeightPC="15" 
-					viewAreaWidthPC="100"
-					infoYPC="95"
-					>	  
-        <idleImage>image/POPUP_LOADING_01.jpg</idleImage>
-        <idleImage>image/POPUP_LOADING_02.jpg</idleImage>
-        <idleImage>image/POPUP_LOADING_03.jpg</idleImage>
-        <idleImage>image/POPUP_LOADING_04.jpg</idleImage>
-        <idleImage>image/POPUP_LOADING_05.jpg</idleImage>
-        <idleImage>image/POPUP_LOADING_06.jpg</idleImage>
-  </mediaDisplay>';
-	$catItem .=  '</item>';
-	
-	return $catItem;
-}
 
 
-function displayChannel($channel)
-{
-    $number  = ($channel->number < 10 ? "0" : "") . $channel->number;
-    $logo    = "http://iptv.kartina.tv/img/ico/$channel->id.gif";
-    $linkUrl = "playChannel.php";
-    $linkExt = "";
 
-    //$linkUrl .= "?d=0"; // dummy option to include in REF argument
-    $linkUrl .= "?id=$channel->id";
-//    $linkUrl .= "&number=$channel->number";
-//    $linkUrl .= "&title=" . urlencode($channel->name);
-//    $linkUrl .= "&vid=" . ($channel->isVideo ? 1 : 0);
-
-
-    # add time stamps only if they are provided
-    if (isset($channel->beginTime) && isset($channel->endTime)) {
-        $start = date('H:i', $channel->beginTime);
-        $stop  = date('H:i', $channel->endTime);
-       	$time  = "$start - $stop";
-    }
-
-    # decide how to display the program
-#    $name = preg_replace('/ -\d+$/', '', $channel->name);
-    $name = $channel->name;
-/*    if ("" == $channel->program) {
-        $name = EMBEDDED_BROWSER ?
-            '<marquee behavior="focus">'.$name.'</marquee>':
-            utf8_cutByPixel($name, CL_WIDTH_LONGNAME, true);
-        $name = "<a href=\"$linkUrl\" $linkExt>$name</a>";
-        $program = "";
-    } else {
-        $name = utf8_cutByPixel($name, CL_WIDTH_NAME, true);
-        $program = EMBEDDED_BROWSER ?
-            '<marquee behavior="focus">'.$channel->program.'</marquee>':
-            utf8_cutByPixel($channel->program, CL_WIDTH_PROGRAM, false);
-        $program = "<a href=\"$linkUrl\" $linkExt>$program</a>";
-    }
-*/
-    # now the entry itself
-	$chanelItem = "";
-	$chanelItem = '<item>';
-	$title = "";
-	if(isset($channel->program)) {
-		$title = '['.$time.']   '. $channel->program;
+function drawCategoryListTemplate($categories ) {
+	$templateFileName = "templates/".TEMPLATE."/".CATEGORY_LIST_TEMPLATE;
+	// file should exist
+	if (! is_readable($templateFileName)) {
+    	return;
 	}
-	$chanelItem .= '<title>'.$title.'</title>';
-	
-	$chanelItem .= '<description>'.  $name . ' [' . $time . ']<b>bold</b><br/>line</description>';
-	$chanelItem .= '<link>'.XK_HOME.$linkUrl.'</link>';
-	$chanelItem .= '<pubDate>'. $name .' [' . $time . ']: '. $channel->program.'<br/>('.$time.')</pubDate>';	
-	$chanelItem .= '<enclosure url="'.XK_HOME.$linkUrl.'" type="video/mp4" />';
-	$chanelItem .= '<media:thumbnail url="'. $logo . '" />';
-	$chanelItem .=  '<mediaDisplay name=threePartsView
-					backgroundColor="' . formatColor($category->color) . '"
-					/>';  
-	$chanelItem .= '</item>';
-	
-	return $chanelItem;
+
+    $template = readLocalFile($templateFileName);
+    
+    $items = "";
+	foreach ($categories as $category) {
+		
+		$cnt=1;
+		for($i=0;$i<$cnt;$i++) {
+			$items = $items.drawCategoryItemTemplate($category);
+		}
+		
+	    
+	}
+    $tmp = str_replace("%%items%%",$items,$template);
+    return $tmp; 
 }
+
+function drawCategoryItemTemplate($category) {
+	$templateFileName = "templates/".TEMPLATE."/".CATEGORY_ITEM_TEMPLATE;
+	// file should exist
+	if (! is_readable($templateFileName )) {
+    	return;
+	}
+    $template = readLocalFile($templateFileName );
+    
+    $template = str_replace("%%XK_HOME%%",XK_HOME,$template);
+    $template = str_replace("%%name%%",$category->name,$template);
+    $template = str_replace("%%id%%",$category->id,$template);
+    $template = str_replace("%%color%%",$category->color,$template);
+    $template = str_replace("%%isVideo%",$category->isVideo,$template);
+
+    return $template;	
+}
+
+function drawChannelListTemplate($categories) {
+
+	$templateFileName = "templates/".TEMPLATE."/".CATEGORY_TEMPLATE;
+	// file should exist
+	if (! is_readable($templateFileName)) {
+    	return;
+	}
+
+    $template = readLocalFile($templateFileName);
+    
+    $items = "";
+    foreach ($categories as $category) {
+	  	foreach ($category->channels as $channel) {
+			if(null != $category->color) {
+				$channel->color = $category->color;
+		    }
+	  		$cnt=1;
+			for($i=0;$i<$cnt;$i++) {
+				$items = $items.drawChannelItemTemplate($channel);
+			}
+			
+	  	}
+    }
+    return str_replace("%%items%%",$items,$template);
+}
+
+function drawChannelItemTemplate($channel) {
+
+	$templateFileName = "templates/".TEMPLATE."/".CHANNEL_ITEM_TEMPLATE;
+	// file should exist
+	if (! is_readable($templateFileName )) {
+    	return;
+	}
+    $template = readLocalFile($templateFileName );
+
+	$template = str_replace("%%XK_HOME%%",XK_HOME,$template);
+    $template = str_replace("%%name%%",$channel->name,$template);
+    $template = str_replace("%%number%%",$channel->number,$template);
+    $template = str_replace("%%id%%",$channel->id,$template);
+    $template = str_replace("%%color%%",$channel->color,$template);
+    $template = str_replace("%%program%%",$channel->program,$template);
+	if (isset($channel->beginTime)) {
+		$template = str_replace("%%beginTime%%",date('H:i', $channel->beginTime),$template);
+    }
+
+	if (isset($channel->endTime)) {
+    	$template = str_replace("%%endTime%%",date('H:i', $channel->endTime),$template);    
+    }
+
+    $linkUrl = XK_HOME."playChannel.php";
+    $linkUrl .= "?id=$channel->id";
+    $linkUrl .= "&vid=" . ($channel->isVideo ? 1 : 0);
+    $template = str_replace("%%linkUrl%%",$linkUrl,$template);
+    $template = str_replace("%%isVideo%%",$channel->isVideo,$template);
+
+    return $template;
+}
+
+function drawEpgTemplate($programs, $nowTime, $hasArchive, $openRef, $currentProgram = null) {
+
+	$templateFileName = "templates/".TEMPLATE."/".EPG_LIST_TEMPLATE;
+	// file should exist
+	if (! is_readable($templateFileName)) {
+    	return;
+	}
+
+    $template = readLocalFile($templateFileName);
+    
+    $titleTime = formatDate('d.m H:i', $nowTime);
+	
+    $template = str_replace("%%nowTime%%",$titleTime ,$template);
+    
+    $items = "";
+  	foreach ($programs as $program) {
+		$items = $items.drawEpgItemTemplate($program, $nowTime, $parser->hasArchive,
+	    $openRef, $currentProgram);
+	}
+    return str_replace("%%items%%",$items,$template);
+}
+
+function drawEpgItemTemplate($program, $nowTime, $hasArchive, $openRef, $currentProgram = null) {
+	$templateFileName = "templates/".TEMPLATE."/".EPG_ITEM_TEMPLATE;
+	// file should exist
+	if (! is_readable($templateFileName )) {
+    	return;
+	}
+    $template = readLocalFile($templateFileName );
+    
+ 	if ($program === $currentProgram) {
+        $class="current";
+        if ($hasArchive) {
+            $openRef .= "&gmt=" . $program->beginTime;
+        }
+    } else if (getTime($program, true) <= $nowTime) {
+        // no time shift offset for links, since it doesn't affect record
+        if ($hasArchive) {
+            $openRef .= "&gmt=" . $program->beginTime;
+        }
+        // but there is time shift for displayed style
+        if (getTime($program) <= $nowTime) {
+            $class="past";
+        }
+    }
+
+    $t = getTime($program);
+    $hour = date('H', $t) * 60 * 60 + date('i', $t) * 60 + date('s', $t);
+    if ($hour < EPG_START_OFFSET) {
+        $timeClass = "timeNight";
+        $beginTimeHuman = formatDate('H:i', $t);
+    } else {
+        $timeClass = "time";
+        $beginTimeHuman = date('H:i', $t);
+    }
+
+	$template = str_replace("%%XK_HOME%%",XK_HOME,$template);
+
+	$template = str_replace("%%description%%",$program->details,$template);
+
+	$template = str_replace("%%openRef%%",$openRef,$template);
+
+	$template = str_replace("%%humanTime%%",$beginTimeHuman,$template);
+		
+    $template = str_replace("%%name%%",$program->name,$template);
+
+    return $template;
+}
+
 
 ?>

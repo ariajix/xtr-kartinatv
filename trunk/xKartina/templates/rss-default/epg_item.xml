@@ -1,0 +1,74 @@
+<item>
+	<title>%%name%%</title>
+	<humanTime>%%humanTime%%</humanTime>
+	<description>%%description%%</description>
+	<link>%%XK_HOME%%%%openRef%%</link>
+	<epg_link>%%XK_HOME%%%%openRef%%</epg_link>
+	<enclosure url="%%XK_HOME%%%%openRef%%" type="video/mp4" />
+	<media:thumbnail url="http://iptv.kartina.tv/img/ico/%%id%%.gif" />
+	<mediaDisplay 	name="threePartsView"
+				    imageRightSide="ozadje"
+				    itemImageXPC="6"
+				    itemImageYPC="26"
+				    itemImageWidthPC="0"
+				    itemImageHeightPC="0"
+				    itemXPC="10"
+				    itemYPC="18"
+				    itemWidthPC="33"
+				    itemHeightPC="6"
+				    sideLeftWidthPC="0"
+				    sideRightWidthPC="100"
+				    itemPerPage="10"
+				    itemPerColumn="1"
+				    itemCornerRounding="no"
+					capXPC="8"
+					capYPC="14"
+					capWidthPC="35"
+					capHeightPC="18"
+					sideColorLeft="0:0:0"
+					sideColorRight="0:0:0"
+					backgroundColor="0:0:0"
+
+					idleImageXPC="45"
+					idleImageYPC="420"
+					idleImageWidthPC="10"
+					idleImageHeightPC="16"
+		
+					menuXPC="4"
+					menuYPC="15"
+					menuWidthPC="1"
+					menuHeightPC="1"
+					forceFocusOnItem="yes"
+					fontSize="10"
+					menuPerPage="3"
+					selectMenuOnRight="yes"
+					menuImageHeightPC="5"
+					itemBorderColor="246:53:138"
+					rollItems="yes"
+					itemBackgroundHeightPC="5"
+					columnPerPage="3"
+					
+					showHeader="no"
+					headerFontSize="22"
+					headerColor="246:53:138"
+					headerXPC="20"
+					headerYPC="4"
+					headerHeightPC="4"
+					headerCapHeightPC="33"
+
+					itemBackgroundColor="0:0:0" >
+		<backgroundDisplay>
+			<text redraw="yes" tailDots="yes" fontSize="20" 
+					offsetXPC="22" offsetYPC="2" widthPC="65" heightPC="10" 
+					backgroundColor="-1:-1:-1" foregroundColor="0:154:205">
+			%%name%%
+			</text>
+	
+			<text redraw="yes" tailDots="yes" fontSize="20" 
+					offsetXPC="4" offsetYPC="80" widthPC="80" heightPC="15" 
+					backgroundColor="-1:-1:-1" foregroundColor="0:154:205">
+			%%description%%
+			</text>
+		</backgroundDisplay>
+	</mediaDisplay>	
+</item>

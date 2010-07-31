@@ -8,8 +8,8 @@ require_once "channelsParser.inc";
 require_once "ktvFunctions.inc";
 
 
-
-displayRssHeader("xTreamer category list for Kartina.TV");
+#header("Content-type: text/xml");
+//displayRssHeader("xTreamer category list for Kartina.TV");
 
 # decide whether chanels list update is needed
 if (! isset($_SESSION['channelsList']) || ! isset($_SESSION['lastUpdate']) ||
@@ -28,7 +28,7 @@ if (! isset($_SESSION['channelsList']) || ! isset($_SESSION['lastUpdate']) ||
 }
 
 # parse raw list into prepared class hierarchy
-$channelsParser = new EregChannelsParser();
+$channelsParser = new ChannelsParser();
 $channelsParser->parse($rawList);
 $channelsParser->selectedChannel = $_SESSION['selectedChannel'];
 
@@ -40,13 +40,19 @@ $lastChannelNumber  = 0;       # last displayed channel on page
 $currentEntry       = 0;
 $foundSelected      = false;
 $limit = CL_ITEMS_PER_PAGE;
+
+echo drawCategoryListTemplate($channelsParser->categories);
+
+/*
 foreach ($channelsParser->categories as $category) {
     $itemsToDisplay[] = $category;
     $currentEntry++;
 }
+
 # display collected items
 foreach ($itemsToDisplay as $item) {
     echo   displayCategory($item);
 }
 displayRssFooter();
+*/
 ?>

@@ -6,7 +6,7 @@
 # Author: consros 2009                                                      #
 #############################################################################
 
-require_once("config.inc");
+require_once("settings.inc");
 
 class Sorter {
 

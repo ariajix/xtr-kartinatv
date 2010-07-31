@@ -7,8 +7,8 @@
 # Author: consros 2010                                                      #
 #############################################################################
 
-#require_once("pageTools.inc");
-require_once("config.inc");
+require_once("pageTools.inc");
+require_once("settings.inc");
 require_once("sorter.inc");
 
 class Program {
@@ -27,7 +27,7 @@ class Channel {
     var $number;
     var $id;
     var $name;
-    var $color;//take it from category
+
     var $program;
     var $beginTime;
     var $endTime;
@@ -170,84 +170,6 @@ class ChannelsParser extends AbstractParser {
             $this->categories = Sorter::sortCategories($this->categories);
             $this->channelsAmount = Sorter::getChannelsAmount($this->categories);
         }
-    }        
-}
-
-
-class EregChannelsParser extends AbstractParser {
-    var $selectedChannel;
-    var $channelsAmount;
-    var $categories;
-
-    function ChannelsParser() {
-        $this->selectedChannel = 0;
-        $this->channelsAmount = 0;
-        $this->categories = array();
-    }
-
-    function parse($string) {
-		# compact all to a single line
-		$content = str_replace("\n","",$string);
-		
-		# no spaces between tags
-		$content = str_replace('>[[:space:]]+', '>', $content);
-		$content = str_replace('[[:space:]]+<', '<', $content);
-		
-		# parse out channels
-		$channels = explode('><',$content);    	
-
-		$i=0;
-		foreach($channels as $k => $v) {
-		  $i=$i+1;
-			if(strstr ($v,"channelgroup ")) {
-
-				ereg('id="([^"]*)"', $v, $matches_id);
-				ereg('title="([^"]*)"', $v, $matches_name);
-				ereg('color="([^"]*)"', $v, $matches_color);
-
-				$category = new Category(
-                        $matches_id[1], $matches_name[1], $matches_color[1]);
-                
-                $this->categories[] = $category;
-			}
-			if(strstr ($v,"channel ")) {
-				$matches_id = null;
-				$matches_name = null;
-				$matches_idx = null;
-				$matches_programm = null;
-				$matches_sprog = null;
-				$matches_eprog =  null;
-								
-				ereg('id="([^"]*)"', $v, $matches_id);
-				ereg('title="([^"]*)"', $v, $matches_name);
-				ereg('idx="([^"]*)"', $v, $matches_idx);
-				ereg('programm="([^"]*)"', $v, $matches_programm);
-				ereg('sprog="([^"]*)"', $v, $matches_sprog);
-				ereg('eprog="([^"]*)"', $v, $matches_eprog);
-				 $channel = new Channel(
-                        $matches_idx[1], $matches_id[1], $matches_name[1], 
-                        $matches_programm[1], $matches_sprog[1], $matches_eprog[1]);
-                    $this->channelsAmount++;
-
-/*                    if (array_key_exists('SELECTED', $attr)) {
-                        $this->selectedChannel = $channel->number;
-                    }
-*/
-                    if (count($this->categories) == 0) {
-                        $this->categories[] = 
-                            new Category(0, "No name", "black");
-                    }
-
-                    $last = count($this->categories) - 1;
-                    $this->categories[$last]->addChannel($channel);
-			}
-		}		
-		
-        if (CL_CUSTOM_SORTING) {            
-            $this->categories = Sorter::sortCategories($this->categories);
-            $this->channelsAmount = Sorter::getChannelsAmount($this->categories);
-        }
-        
     }        
 }
 

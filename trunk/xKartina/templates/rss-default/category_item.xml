@@ -1,0 +1,122 @@
+<item>
+
+<title>%%name%%</title>
+<link>%%XK_HOME%%showCategory.php?id=%%id%%</link>
+<media:thumbnail url="%%XK_HOME%%img/cat.png" />
+      
+<mediaDisplay name="threePartsView" 
+					showHeader="yes" 
+					headerXPC="20"
+					headerYPC="3"
+					showDefaultInfo="no"
+				
+					imageLeftSide="image/MVIX_LIVE_MAIN_BG_2.jpg" 
+					sideLeftWidthPC="10" 
+					sideRightWidthPC="0" 
+					sideColorRight="0:0:0" 
+					sideColorLeft="0:0:0" 
+					
+					itemImageXPC="9" 
+					itemImageYPC="10" 
+					itemImageHeightPC="8" 
+					itemImageWidthPC="8" 
+				
+					drawItemText="yes"
+					slidingItemText="yes"
+
+					itemGap="0"
+					itemXPC="18" 
+					itemYPC="9"
+					
+					itemHeightPC="8" 
+					itemWidthPC="70" 
+					itemPerPage="9" 
+					
+					fontSize="14"
+					idleImageXPC="45" 
+					idleImageYPC="42" 
+					idleImageWidthPC="10" 
+					idleImageHeightPC="15" 
+					viewAreaWidthPC="100"
+					infoYPC="95"
+					>	  
+        <idleImage>image/POPUP_LOADING_01.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_02.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_03.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_04.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_05.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_06.jpg</idleImage>
+        
+ 		<itemDisplay>
+    		<text offsetXPC="2" offsetYPC="10" widthPC="65" heightPC="30" fontSize="11" backgroundColor="-1:-1:-1" foregroundColor="200:200:200">
+      			<script_replace>getItemInfo("title");</script_replace>
+    		</text>
+		
+			<text offsetXPC="2" offsetYPC="45" widthPC="15" heightPC="40" fontSize="12" backgroundColor="-1:-1:-1" foregroundColor="0:200:200">
+		    	<script_replace>getItemInfo("humanTime");</script_replace>
+		  	</text>
+			<text offsetXPC="15" offsetYPC="10" widthPC="82" heightPC="80" fontSize="12" backgroundColor="-1:-1:-1" foregroundColor="200:200:0">
+    			<script_replace>getItemInfo("description");</script_replace>
+  			</text>
+		</itemDisplay>
+
+		<infoDisplay>
+		
+			<onEnter>
+				startVideo = 1;
+			 	setRefreshTime(150);
+			</onEnter>
+
+  			<onRefresh>
+			    if (startVideo == 1) {
+			       playItemURL(-1, 0, "mediaDisplay", "infoDisplay", "previewWindow");
+			       setRefreshTime(1000);
+			       startVideo = 0;
+			    }
+				if (startVideo == 1) {
+					progress = getPlaybackStatus();
+					updatePlaybackProgress(progress, "mediaDisplay", "infoDisplay", "progressBar");
+				}
+  			</onRefresh>
+
+  <onExit>
+    playItemURL(-1, 1);
+    setRefreshTime(-1);
+  </onExit>
+
+  <text offsetXPC="33" offsetYPC="10" widthPC="20" heightPC="10" fontSize="16" backgroundColor="-1:-1:-1" foregroundColor="200:200:200" lines="2">
+    <script_replace> 
+      getItemInfo("title");
+    </script_replace>
+  </text>
+
+  <text1 offsetXPC="70" offsetYPC="20" widthPC="27" heightPC="40" fontSize="10" backgroundColor="-1:-1:-1" foregroundColor="200:200:0" lines="7">
+    <script_replace> 
+      getItemInfo("description");
+    </script_replace>
+  </text1>
+
+  <previewWindow windowColor="20:20:20" offsetXPC="33" offsetYPC="20" widthPC="60" heightPC="50">
+  </previewWindow>
+  
+  <progressBar backgroundColor="100:100:100" offsetXPC="33" offsetYPC="70" widthPC="60" heightPC="3">
+
+    <bar offsetXPC="0" offsetYPC="35" widthPC="75" heightPC="30" barColor="250:250:250" progressColor="30:100:10" />
+    <text offsetXPC="77" offsetYPC="0" widthPC="20" heightPC="100" fontSize="7" backgroundColor="100:100:100" foregroundColor="200:200:0">
+      <script_replace> 
+			getItemInfo("durationHHMMSS");
+      </script_replace>
+    </text>
+
+  </progressBar>
+
+	<fullScreenBar>
+	<backgroundImage></backgroundImage>
+	<playbackImage></playbackImage>
+	<bufferImage></bufferImage>
+	<text backgroundColor="255:255:255" foregroundColor="200:200:200" fontSize="10"></text>
+	</fullScreenBar>
+
+</infoDisplay>		
+  </mediaDisplay>
+</item>

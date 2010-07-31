@@ -7,9 +7,9 @@
 # Author: consros 2008                                                      #
 #############################################################################
 
-require_once "config.inc";
+require_once "settings.inc";
 require_once "tools.inc";
-#require_once "lang.inc";
+require_once "lang.inc";
 
 define("COOKIE_NAME", "KtvCookie");
 define("BASE_URL", "http://iptv.kartina.tv/");
@@ -36,7 +36,7 @@ class KtvFunctions {
     }
 
     function authorize() {
-#        $this->trace("Authorization started");
+        $this->trace("Authorization started");
         $params  = "act=login";
         $params .= "&code_login=" . USERNAME;
         $params .= "&code_pass="  . PASSWORD;
@@ -48,7 +48,7 @@ class KtvFunctions {
         strpos($this->cookie, "=deleted") and 
             dieOnError(USERNAME . ": " . LANG_ERR_SESSION_TIMEOUT,
                 "img/errors/session-timeout.png");
-#        $this->trace("Authorization returned: $this->cookie");
+        $this->trace("Authorization returned: $this->cookie");
         $_SESSION[COOKIE_NAME] = $this->cookie;
     }
 
@@ -61,17 +61,17 @@ class KtvFunctions {
             false == strpos($reply, "msg=access_denied") && 
             false == strpos($reply, "msg=auth_err");
         if (! $ok) {
-#            $this->trace("Authorization missed or lost");
+            $this->trace("Authorization missed or lost");
         }
         return $ok;
     }
 
     function getData($url, $name) {
-#        $this->trace("Getting $name");
+        $this->trace("Getting $name");
         $reply = getPageContentByGet($url, $this->cookie);
         if (! $this->isAuthorized($reply)) {
             $this->authorize(); 
-#            $this->trace("Second try to get $name");
+            $this->trace("Second try to get $name");
             $reply = getPageContentByGet($url, $this->cookie);
             $this->isAuthorized($reply) or 
                 dieOnError(LANG_ERR_REQUEST_SENDING . ": $name:\n$reply",
