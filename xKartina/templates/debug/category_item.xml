@@ -1,0 +1,3 @@
+<tr>
+<td><img src="%%XK_HOME%%img/cat.png" /></td><td><a href="%%XK_HOME%%showCategory.php?id=%%id%%">%%name%%</a></td>
+</tr>

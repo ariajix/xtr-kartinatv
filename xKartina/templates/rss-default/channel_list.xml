@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+		
+<bookmark> main_menu </bookmark>
+    <mediaDisplay name="onePartView"
+    imageRightSide="ozadje"
+    itemImageXPC="6"
+    itemImageYPC="26"
+    itemImageWidthPC="0"
+    itemImageHeightPC="0"
+    itemXPC="10"
+    itemYPC="18"
+    itemWidthPC="33"
+    itemHeightPC="6"
+    sideLeftWidthPC="0"
+    sideRightWidthPC="100"
+    itemPerPage="10"
+    itemPerColumn="1"
+    itemCornerRounding="no"
+    
+    capXPC="8"
+    capYPC="14"
+    capWidthPC="35"
+    capHeightPC="18"
+    sideColorLeft="0:0:0"
+    sideColorRight="0:0:0"
+    backgroundColor="0:0:0"
+   
+    idleImageXPC="45"
+    idleImageYPC="420"
+    idleImageWidthPC="10"
+    idleImageHeightPC="16"
+
+	menuXPC="4"
+    menuYPC="15"
+    menuWidthPC="1"
+    menuHeightPC="1"
+    forceFocusOnItem="yes"
+    fontSize="10"
+    menuPerPage="3"
+    selectMenuOnRight="yes"
+    menuImageHeightPC="5"
+    itemBorderColor="246:53:138"
+    rollItems="yes"
+    itemBackgroundHeightPC="5"
+    columnPerPage="3"
+    
+    showHeader="no"
+    headerFontSize="22"
+    headerColor="246:53:138"
+    headerXPC="20"
+    headerYPC="4"
+    headerHeightPC="4"
+    headerCapHeightPC="33"
+    
+	itemBackgroundColor="0:0:0"
+
+    >
+	<onEnter>
+		index = getFocusItemIndex();
+		description = getItemInfo(index, "description"); 
+		redrawDisplay();
+	</onEnter>
+	<onUserInput>
+			userInput = currentUserInput();
+			str = userInput;
+			if ( userInput == "R" ) {
+
+					url = getItemInfo(index, "epg_link");				
+					jumpToLink("epg_link");
+					description = url;
+					redrawDisplay();
+					"true";
+
+			} else {
+				index = getFocusItemIndex();
+				if ( userInput == "D" ) {
+					index = index+1;
+				}
+				if ( userInput == "U" ) {
+					if(index > 0){
+						index = index - 1;
+					}
+				}
+				
+				description = getItemInfo(index, "description"); 
+							
+					
+				if(null != description) {
+					redrawDisplay();
+					"false";
+				}
+			}
+			
+		</onUserInput>
+		<backgroundDisplay>
+			<text redraw="yes" tailDots="yes" fontSize="20"
+					offsetXPC="22" offsetYPC="2" widthPC="65" heightPC="10" 
+					backgroundColor="-1:-1:-1" foregroundColor="0:154:205">
+			</text>
+
+			<text redraw="yes" tailDots="yes" fontSize="16" lines="3"
+					offsetXPC="8" offsetYPC="83" widthPC="80" heightPC="17" 
+					backgroundColor="-1:-1:-1" foregroundColor="0:154:205">
+				<script>
+					description;
+				</script>
+			</text>
+		</backgroundDisplay>
+
+    <idleImage>image/POPUP_LOADING_01.jpg</idleImage>
+    <idleImage>image/POPUP_LOADING_02.jpg</idleImage>
+    <idleImage>image/POPUP_LOADING_03.jpg</idleImage>
+    <idleImage>image/POPUP_LOADING_04.jpg</idleImage>
+    <idleImage>image/POPUP_LOADING_05.jpg</idleImage>
+    <idleImage>image/POPUP_LOADING_06.jpg</idleImage>
+</mediaDisplay>
+	<!-- link used by the jumpToLink command (must be outside of the mediaDisplay item) -->
+	<epg_link>
+			<link>
+				<script>
+					url;
+				</script>
+			</link>
+	</epg_link>
+
+<channel>
+	<menu></menu>
+		%%items%%
+</channel>
+</rss>

@@ -5,7 +5,7 @@
 # Author: consros 2009                                                      #
 #############################################################################
 
-#require_once "lang.inc";
+require_once "lang.inc";
 
 function compactHtml($html) {
     # compact all to a single line
@@ -19,20 +19,12 @@ function compactHtml($html) {
 }
 
 function parseOutCookies($html) {
-/*    preg_match_all("/Set-Cookie: .*?;/", $html, $matches);
+    preg_match_all("/Set-Cookie: .*?;/", $html, $matches);
+    $cookies = "";
     foreach ($matches[0] as $cookie) {
         $cookies .= substr($cookie, 4, strlen($cookie) - 5) . "\r\n";
     }
-*/
-    ereg("(Set-Cookie:[^;]*)", $html, $matches);
-    
-    $cookies = substr($matches[0], 4) . "\r\n";
-	
     return $cookies;
-    
-    
-    
-    
 }
 
 function getPageContentByGet($url, $headerExt) {
@@ -102,6 +94,7 @@ function getPageContentByPost($url, $params, $headerExt = "") {
     }
 
     fputs($fp, $header . $params);
+    $content = "";         
     while (! feof($fp)) {
         $content .= fgets($fp, 1024);
     }
@@ -114,6 +107,7 @@ function readLocalFile($filename) {
     $fh = fopen($filename, 'r') or 
         dieOnError(LANG_ERR_FILE_READ . ": " . $filename,
             "img/errors/read-error.png");
+	$content = "";         
     while($data = fread($fh, 1024)) {
         $content .= $data;
     }
