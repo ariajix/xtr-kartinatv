@@ -6,69 +6,66 @@
 	<epg_link>%%XK_HOME%%getEpg.php?id=%%id%%</epg_link>
 	<enclosure url="%%linkUrl%%" type="video/mp4" />
 	<media:thumbnail url="http://iptv.kartina.tv/img/ico/%%id%%.gif" />
-	<mediaDisplay 	name="threePartsView"
-				    imageRightSide="ozadje"
-				    itemImageXPC="6"
-				    itemImageYPC="26"
-				    itemImageWidthPC="0"
-				    itemImageHeightPC="0"
-				    itemXPC="10"
-				    itemYPC="18"
-				    itemWidthPC="33"
-				    itemHeightPC="6"
-				    sideLeftWidthPC="0"
-				    sideRightWidthPC="100"
-				    itemPerPage="10"
-				    itemPerColumn="1"
-				    itemCornerRounding="no"
-					capXPC="8"
-					capYPC="14"
-					capWidthPC="35"
-					capHeightPC="18"
-					sideColorLeft="0:0:0"
-					sideColorRight="0:0:0"
-					backgroundColor="0:0:0"
-
-					idleImageXPC="45"
-					idleImageYPC="420"
-					idleImageWidthPC="10"
-					idleImageHeightPC="16"
-		
-					menuXPC="4"
-					menuYPC="15"
-					menuWidthPC="1"
-					menuHeightPC="1"
-					forceFocusOnItem="yes"
-					fontSize="10"
-					menuPerPage="3"
-					selectMenuOnRight="yes"
-					menuImageHeightPC="5"
-					itemBorderColor="246:53:138"
-					rollItems="yes"
-					itemBackgroundHeightPC="5"
-					columnPerPage="3"
-					
-					showHeader="no"
-					headerFontSize="22"
-					headerColor="246:53:138"
+	     
+<mediaDisplay name="threePartsView" 
+					showHeader="yes" 
 					headerXPC="20"
-					headerYPC="4"
-					headerHeightPC="4"
-					headerCapHeightPC="33"
+					headerYPC="3"
+					showDefaultInfo="no"
+					
+					capWidthPC="0"
+				
+					imageLeftSide="image/MVIX_LIVE_MAIN_BG_2.jpg" 
+					sideLeftWidthPC="10" 
+					sideRightWidthPC="0" 
+					sideColorRight="0:0:0" 
+					sideColorLeft="0:0:0" 
+					
+					itemImageXPC="9" 
+					itemImageYPC="10" 
+					itemImageHeightPC="8" 
+					itemImageWidthPC="8" 
+				
+					drawItemText="no"
+					slidingItemText="yes"
 
-					itemBackgroundColor="0:0:0" >
-		<backgroundDisplay>
-			<text redraw="yes" tailDots="yes" fontSize="20" 
-					offsetXPC="22" offsetYPC="2" widthPC="65" heightPC="10" 
-					backgroundColor="-1:-1:-1" foregroundColor="0:154:205">
-			%%name%%
-			</text>
+					itemGap="0"
+					itemXPC="18" 
+					itemYPC="10"
+					
+					itemHeightPC="8" 
+					itemWidthPC="80" 
+					itemPerPage="9" 
+					
+					fontSize="14"
+					idleImageXPC="45" 
+					idleImageYPC="42" 
+					idleImageWidthPC="10" 
+					idleImageHeightPC="15" 
+					viewAreaWidthPC="100"
+					infoYPC="95"
+					>	  
+        <idleImage>image/POPUP_LOADING_01.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_02.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_03.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_04.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_05.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_06.jpg</idleImage>
+        
+ 		<itemDisplay>
+    		<text itemAlign="center" textAlignt="center" offsetXPC="2" offsetYPC="10" widthPC="80" heightPC="30" fontSize="11" backgroundColor="-1:-1:-1" foregroundColor="200:200:200">
+      			<script_replace>getItemInfo("title");</script_replace>
+    		</text>
+		
+			<text offsetXPC="2" offsetYPC="45" widthPC="15" heightPC="40" fontSize="12" backgroundColor="-1:-1:-1" foregroundColor="0:200:200">
+		    	<script_replace>getItemInfo("humanTime");</script_replace>
+		  	</text>
+			<text offsetXPC="17" offsetYPC="12" widthPC="80" heightPC="80" fontSize="12" backgroundColor="-1:-1:-1" foregroundColor="200:200:0">
+    			<script_replace>getItemInfo("description");</script_replace>
+  			</text>
+		</itemDisplay>
 	
-			<text redraw="yes" tailDots="yes" fontSize="20" 
-					offsetXPC="4" offsetYPC="80" widthPC="80" heightPC="15" 
-					backgroundColor="-1:-1:-1" foregroundColor="0:154:205">
-			%%programm%%
-			</text>
-		</backgroundDisplay>
-	</mediaDisplay>	
+  </mediaDisplay>
+
+  
 </item>

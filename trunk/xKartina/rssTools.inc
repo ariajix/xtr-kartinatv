@@ -121,7 +121,7 @@ function drawEpgTemplate($programs, $nowTime, $hasArchive, $openRef, $currentPro
     
     $items = "";
   	foreach ($programs as $program) {
-		$items = $items.drawEpgItemTemplate($program, $nowTime, $parser->hasArchive,
+		$items = $items.drawEpgItemTemplate($program, $nowTime, $hasArchive,
 	    $openRef, $currentProgram);
 	}
     return str_replace("%%items%%",$items,$template);

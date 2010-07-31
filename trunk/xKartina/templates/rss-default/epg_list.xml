@@ -2,6 +2,75 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
 <menu></menu>
+  <mediaDisplay name="onePartView"    >
+	<onEnter>
+		index = getFocusItemIndex();
+		description = getItemInfo(index, "description"); 
+		redrawDisplay();
+	</onEnter>
+	<onUserInput>
+			userInput = currentUserInput();
+			str = userInput;
+			if ( userInput == "R" ) {
+
+					url = getItemInfo(index, "epg_link");				
+					jumpToLink("epg_link");
+					description = url;
+					redrawDisplay();
+					"true";
+
+			} else {
+				index = getFocusItemIndex();
+				if ( userInput == "D" ) {
+					index = index+1;
+				}
+				if ( userInput == "U" ) {
+					if(index > 0){
+						index = index - 1;
+					}
+				}
+				
+				description = getItemInfo(index, "description"); 
+							
+					
+				if(null != description) {
+					redrawDisplay();
+					"false";
+				}
+			}
+			
+		</onUserInput>
+		<backgroundDisplay>
+			<text redraw="yes" tailDots="yes" fontSize="20"
+					offsetXPC="22" offsetYPC="2" widthPC="65" heightPC="10" 
+					backgroundColor="-1:-1:-1" foregroundColor="0:154:205">
+			</text>
+
+			<text redraw="yes" tailDots="yes" fontSize="16" lines="3"
+					offsetXPC="8" offsetYPC="83" widthPC="80" heightPC="17" 
+					backgroundColor="-1:-1:-1" foregroundColor="0:154:205">
+				<script>
+					description;
+				</script>
+			</text>
+		</backgroundDisplay>
+
+    <idleImage>image/POPUP_LOADING_01.jpg</idleImage>
+    <idleImage>image/POPUP_LOADING_02.jpg</idleImage>
+    <idleImage>image/POPUP_LOADING_03.jpg</idleImage>
+    <idleImage>image/POPUP_LOADING_04.jpg</idleImage>
+    <idleImage>image/POPUP_LOADING_05.jpg</idleImage>
+    <idleImage>image/POPUP_LOADING_06.jpg</idleImage>
+</mediaDisplay>
+	<!-- link used by the jumpToLink command (must be outside of the mediaDisplay item) -->
+	<epg_link>
+			<link>
+				<script>
+					url;
+				</script>
+			</link>
+	</epg_link>
+
 %%items%%
 </channel>
 </rss>
