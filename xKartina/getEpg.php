@@ -19,10 +19,24 @@ $arcTime = isset($_GET['archiveTime']) ? $_GET['archiveTime'] : $nowTime;
 
 function getTime($program, $ignoreTimeShift = false) {
     # time shift will be taken directly from channel name
-    
-    //$timeShift = $ignoreTimeShift || 1 != preg_match('/^.* -(\d+)$/', $_GET['title'], $m) ? 0 : $m[1];
-    //return $program->beginTime + $timeShift * 60 * 60 + TIME_ZONE_SECONDS;
-    return $program->beginTime;
+//    $date = new DateTime();
+//	$date->setTimestamp($program->beginTime);
+//	$offset = timezone_offset_get(new DateTimeZone("Europe/Berlin"),$date);
+//	$timeShift = $ignoreTimeShift || 1 != preg_match('/^.* -(\d+)$/', $_GET['title'], $m) ? 0 : $m[1];
+//    return $program->beginTime + $timeShift * 60 * 60 + TIME_ZONE_SECONDS;
+	if($ignoreTimeShift) {
+		return $program->beginTime;
+	}
+	$dateTimeZoneLocal = new DateTimeZone("Europe/Berlin");
+	$dateTimeZoneUTC = new DateTimeZone("UTC");
+
+
+	$dateTimeLocal = new DateTime("now", $dateTimeZoneLocal);
+	$dateTimeutc = new DateTime("now", $dateTimeZoneUTC);
+
+	$timeOffset = $dateTimeLocal->getOffset();
+	
+    return $program->beginTime + $timeOffset;
 }
 
 function getEpg($id, $date) {
@@ -95,12 +109,12 @@ function displayProgram($program, $nowTime, $hasArchive, $openRef, $currentProgr
     if ($program === $currentProgram) {
         $class="current";
         if ($hasArchive) {
-            $openRef .= "&gmt=" . $program->beginTime;
+            $openRef .= "&amp;gmt=" . $program->beginTime;
         }
     } else if (getTime($program, true) <= $nowTime) {
     	// no time shift offset for links, since it doesn't affect record
         if ($hasArchive) {
-            $openRef .= "&gmt=" . $program->beginTime;
+            $openRef .= "&amp;gmt=" . $program->beginTime;
         }
         // but there is time shift for displayed style
         if (getTime($program) <= $nowTime) {
@@ -225,7 +239,7 @@ function displayProgram($program, $nowTime, $hasArchive, $openRef, $currentProgr
 	*/
     
 		echo drawEpgTemplate($programs, $nowTime, $parser->hasArchive,
-	    $openRef, $currentProgram);
+	    $openRef,$id, $currentProgram);
 /*    
     # define previous page link if it wasn't already
     if (! isset($prevPage)) {
