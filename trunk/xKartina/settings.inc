@@ -29,7 +29,7 @@ define("ALLOW_EROTIC", TRUE);
 define("BUFFER_SIZE", 512);
 
 # default font size used in plugin
-define("FONT_SIZE", 16);
+#define("FONT_SIZE", 16);
 
 # use media proxy or not
 define("MEDIA_PROXY", "");

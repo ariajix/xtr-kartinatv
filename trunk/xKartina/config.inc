@@ -5,8 +5,10 @@
 	define("XK_HOME", "http://192.168.178.22/xtr-kartinatv/xKartina/");
 	
 	define("TEMPLATE", "rss-default");
+	//define("TEMPLATE", "debug");
 	define("CATEGORY_TEMPLATE", "channel_list.xml");
 	define("CHANNEL_ITEM_TEMPLATE", "channel_item.xml");
+	define("CHANNEL_MENU_ITEM_TEMPLATE", "channel_menu_item.xml");
 	
 	define("CATEGORY_LIST_TEMPLATE", "category_list.xml");
 	define("CATEGORY_ITEM_TEMPLATE", "category_item.xml");

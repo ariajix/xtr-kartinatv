@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 		
-<bookmark> main_menu </bookmark>
+<bookmark>EPG Menu</bookmark>
+%%menuItems%%
+
     <mediaDisplay name="onePartView"
     imageRightSide="ozadje"
     itemImageXPC="6"
@@ -58,23 +60,38 @@
     >
 	<onEnter>
 		index = getFocusItemIndex();
-		description = getItemInfo(index, "description"); 
+		pageTitle = getItemInfo(index, "pageTitle");
+		description = getItemInfo(index, "description");
+		if(null == description) {
+			description = getItemInfo(index, "title");	
+		}  
 		redrawDisplay();
 	</onEnter>
 	<onUserInput>
 			userInput = currentUserInput();
 			str = userInput;
+			index = 0.0;
 			if ( userInput == "R" ) {
 
-					url = getItemInfo(index, "epg_link");				
-					jumpToLink("epg_link");
-					redrawDisplay();
-					"true";
-
+				url = getItemInfo(index, "epg_link");				
+				/*jumpToLink("epg_link");*/
+				index = getFocusItemIndex();
+				setFocusMenuIndex(index);
+				selectMenu(index);
+				/*postMessage("enter");*/
+				 
+				redrawDisplay();
+				"true";
 			} else {
+			if ( userInput == "L" ) {
+				postMessage("RET");
+				"true";
+			} else {
+		 
 				index = getFocusItemIndex();
 				if ( userInput == "D" ) {
-					index = index+1;
+					/* replace + by - to avoid concatenating*/
+					index = index - (-1);
 				}
 				if ( userInput == "U" ) {
 					if(index > 0){
@@ -82,15 +99,22 @@
 					}
 				}
 				
-				description = getItemInfo(index, "description"); 
-							
+				/*description = userInput;
+				description =  description + index;
+				*/
+				
+				pageTitle = getItemInfo(index, "pageTitle");
+				description =  getItemInfo(index, "description");
+				
+				if(null == description) {
+					description = getItemInfo(index, "title");	
+				} 
 					
 				if(null != description) {
 					redrawDisplay();
 					"false";
 				}
 			}
-			
 		</onUserInput>
 		<backgroundDisplay>
 			<text redraw="yes" tailDots="yes" fontSize="20"
@@ -98,12 +122,11 @@
 					backgroundColor="-1:-1:-1" foregroundColor="0:154:205">
 			</text>
 
-			<text redraw="yes" tailDots="yes" fontSize="16" lines="3"
+			<text redraw="yes" tailDots="yes" fontSize="14" lines="5"
 					offsetXPC="8" offsetYPC="83" widthPC="80" heightPC="17" 
 					backgroundColor="-1:-1:-1" foregroundColor="0:154:205">
 				<script>
 					description;
-					
 				</script>
 			</text>
 		</backgroundDisplay>

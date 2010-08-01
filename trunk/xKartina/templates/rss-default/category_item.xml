@@ -23,7 +23,7 @@
 					itemImageHeightPC="8" 
 					itemImageWidthPC="8" 
 				
-					drawItemText="no"
+					drawItemText="yes"
 					slidingItemText="yes"
 
 					itemGap="0"
@@ -33,6 +33,12 @@
 					itemHeightPC="8" 
 					itemWidthPC="80" 
 					itemPerPage="9" 
+					
+					menuXPC="1"
+					menuYPC="1"
+					menuWidthPC="0"
+					menuHeightPC="0"
+					menuPerPage="1"
 					
 					fontSize="14"
 					idleImageXPC="45" 
@@ -55,7 +61,7 @@
     		</text>
 		
 			<text offsetXPC="2" offsetYPC="45" widthPC="15" heightPC="40" fontSize="12" backgroundColor="-1:-1:-1" foregroundColor="0:200:200">
-		    	<script_replace>getItemInfo("humanTime");</script_replace>
+		    	<script_replace>getItemInfo("archive") + getItemInfo("humanTime");</script_replace>
 		  	</text>
 			<text offsetXPC="17" offsetYPC="28" widthPC="80" heightPC="80" fontSize="12" backgroundColor="-1:-1:-1" foregroundColor="200:200:0">
     			<script_replace>getItemInfo("description");</script_replace>

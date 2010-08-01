@@ -5,7 +5,12 @@ function formatColor($color) {
 	return hexdec(substr($color, 1,2)) .':'.hexdec(substr($color, 3,2)).':'.hexdec(substr($color, 5,2)); 
 }
 
-
+function tmplReplace($placeholder,$value,$str) {
+	if(null == $value) {
+		$value = "";
+	}
+ 	return  str_replace("%%".$placeholder."%%",$value,$str);
+}
 
 function drawCategoryListTemplate($categories ) {
 	$templateFileName = "templates/".TEMPLATE."/".CATEGORY_LIST_TEMPLATE;
@@ -26,7 +31,7 @@ function drawCategoryListTemplate($categories ) {
 		
 	    
 	}
-    $tmp = str_replace("%%items%%",$items,$template);
+    $tmp = tmplReplace("items",$items,$template);
     return $tmp; 
 }
 
@@ -38,11 +43,11 @@ function drawCategoryItemTemplate($category) {
 	}
     $template = readLocalFile($templateFileName );
     
-    $template = str_replace("%%XK_HOME%%",XK_HOME,$template);
-    $template = str_replace("%%name%%",$category->name,$template);
-    $template = str_replace("%%id%%",$category->id,$template);
-    $template = str_replace("%%color%%",$category->color,$template);
-    $template = str_replace("%%isVideo%",$category->isVideo,$template);
+    $template = tmplReplace("XK_HOME",XK_HOME,$template);
+    $template = tmplReplace("name",$category->name,$template);
+    $template = tmplReplace("id",$category->id,$template);
+    $template = tmplReplace("color",$category->color,$template);
+    $template = tmplReplace("isVideo%",$category->isVideo,$template);
 
     return $template;	
 }
@@ -58,6 +63,7 @@ function drawChannelListTemplate($categories) {
     $template = readLocalFile($templateFileName);
     
     $items = "";
+    $menuItems = "";
     foreach ($categories as $category) {
 	  	foreach ($category->channels as $channel) {
 			if(null != $category->color) {
@@ -66,46 +72,52 @@ function drawChannelListTemplate($categories) {
 	  		$cnt=1;
 			for($i=0;$i<$cnt;$i++) {
 				$items = $items.drawChannelItemTemplate($channel);
+				$menuItems = $menuItems.drawChannelItemTemplate($channel,CHANNEL_MENU_ITEM_TEMPLATE);
 			}
-			
 	  	}
     }
-    return str_replace("%%items%%",$items,$template);
+    $template = tmplReplace("menuItems",$menuItems,$template);
+    return tmplReplace("items",$items,$template);
 }
 
-function drawChannelItemTemplate($channel) {
+function drawChannelItemTemplate($channel, $temp = CHANNEL_ITEM_TEMPLATE) {
 
-	$templateFileName = "templates/".TEMPLATE."/".CHANNEL_ITEM_TEMPLATE;
+	$templateFileName = "templates/".TEMPLATE."/".$temp;
 	// file should exist
 	if (! is_readable($templateFileName )) {
     	return;
 	}
+	$name = preg_replace('/ -\d+$/', '', $channel->name);
+	
     $template = readLocalFile($templateFileName );
 
-	$template = str_replace("%%XK_HOME%%",XK_HOME,$template);
-    $template = str_replace("%%name%%",$channel->name,$template);
-    $template = str_replace("%%number%%",$channel->number,$template);
-    $template = str_replace("%%id%%",$channel->id,$template);
-    $template = str_replace("%%color%%",$channel->color,$template);
-    $template = str_replace("%%program%%",$channel->program,$template);
+	$template = tmplReplace("XK_HOME",XK_HOME,$template);
+    $template = tmplReplace("name",$name,$template);
+    $template = tmplReplace("number",$channel->number,$template);
+    $template = tmplReplace("id",$channel->id,$template);
+    $template = tmplReplace("color",$channel->color,$template);
+    $template = tmplReplace("program",$channel->program,$template);
 	if (isset($channel->beginTime)) {
-		$template = str_replace("%%beginTime%%",date('H:i', $channel->beginTime),$template);
+		$template = tmplReplace("beginTime",date('H:i', $channel->beginTime),$template);
     }
 
 	if (isset($channel->endTime)) {
-    	$template = str_replace("%%endTime%%",date('H:i', $channel->endTime),$template);    
+    	$template = tmplReplace("endTime",date('H:i', $channel->endTime),$template);    
     }
 
     $linkUrl = XK_HOME."playChannel.php";
     $linkUrl .= "?id=$channel->id";
-    $linkUrl .= "&vid=" . ($channel->isVideo ? 1 : 0);
-    $template = str_replace("%%linkUrl%%",$linkUrl,$template);
-    $template = str_replace("%%isVideo%%",$channel->isVideo,$template);
+    $linkUrl .= "&amp;vid=" . ($channel->isVideo ? 1 : 0);
+    $template = tmplReplace("linkUrl",$linkUrl,$template);
+    $template = tmplReplace("isVideo",$channel->isVideo,$template);
+    
+    
+    
 
     return $template;
 }
 
-function drawEpgTemplate($programs, $nowTime, $hasArchive, $openRef, $currentProgram = null) {
+function drawEpgTemplate($programs, $nowTime, $hasArchive, $openRef, $channelId, $currentProgram = null) {
 
 	$templateFileName = "templates/".TEMPLATE."/".EPG_LIST_TEMPLATE;
 	// file should exist
@@ -117,17 +129,17 @@ function drawEpgTemplate($programs, $nowTime, $hasArchive, $openRef, $currentPro
     
     $titleTime = formatDate('d.m H:i', $nowTime);
 	
-    $template = str_replace("%%nowTime%%",$titleTime ,$template);
+    $template = tmplReplace("nowTime",$titleTime ,$template);
     
     $items = "";
   	foreach ($programs as $program) {
 		$items = $items.drawEpgItemTemplate($program, $nowTime, $hasArchive,
-	    $openRef, $currentProgram);
+	    $openRef, $channelId,  $currentProgram);
 	}
-    return str_replace("%%items%%",$items,$template);
+    return tmplReplace("items",$items,$template);
 }
 
-function drawEpgItemTemplate($program, $nowTime, $hasArchive, $openRef, $currentProgram = null) {
+function drawEpgItemTemplate($program, $nowTime, $hasArchive, $openRef,$channelId, $currentProgram = null) {
 	$templateFileName = "templates/".TEMPLATE."/".EPG_ITEM_TEMPLATE;
 	// file should exist
 	if (! is_readable($templateFileName )) {
@@ -138,12 +150,12 @@ function drawEpgItemTemplate($program, $nowTime, $hasArchive, $openRef, $current
  	if ($program === $currentProgram) {
         $class="current";
         if ($hasArchive) {
-            $openRef .= "&gmt=" . $program->beginTime;
+            $openRef .= "&amp;gmt=" . $program->beginTime;
         }
     } else if (getTime($program, true) <= $nowTime) {
         // no time shift offset for links, since it doesn't affect record
         if ($hasArchive) {
-            $openRef .= "&gmt=" . $program->beginTime;
+            $openRef .= "&amp;gmt=" . $program->beginTime;
         }
         // but there is time shift for displayed style
         if (getTime($program) <= $nowTime) {
@@ -161,16 +173,28 @@ function drawEpgItemTemplate($program, $nowTime, $hasArchive, $openRef, $current
         $beginTimeHuman = date('H:i', $t);
     }
 
-	$template = str_replace("%%XK_HOME%%",XK_HOME,$template);
+	$template = tmplReplace("XK_HOME",XK_HOME,$template);
 
-	$template = str_replace("%%description%%",$program->details,$template);
+	$template = tmplReplace("description",$program->details,$template);
 
-	$template = str_replace("%%openRef%%",$openRef,$template);
+	$template = tmplReplace("openRef",$openRef,$template);
 
-	$template = str_replace("%%humanTime%%",$beginTimeHuman,$template);
+	$template = tmplReplace("humanTime",$beginTimeHuman,$template);
 		
-    $template = str_replace("%%name%%",$program->name,$template);
+    $template = tmplReplace("name",$program->name,$template);
 
+    $template = tmplReplace("id",$channelId,$template);
+    
+    $template = tmplReplace("pageTitle",$channelId,$template);
+    
+    
+    if ($hasArchive) {
+    	$template = tmplReplace("archive","A",$template);
+    }
+    else {
+    	$template = tmplReplace("archive","",$template);
+    }
+    
     return $template;
 }
 

@@ -30,8 +30,7 @@
 					}
 				}
 				
-				description = getItemInfo(index, "description"); 
-							
+				description = getItemInfo(index, "epg_link");
 					
 				if(null != description) {
 					redrawDisplay();
