@@ -2,7 +2,7 @@
 
 <title>%%name%%</title>
 <link>%%XK_HOME%%showCategory.php?id=%%id%%</link>
-<media:thumbnail url="%%XK_HOME%%img/cat.png" />
+<media:thumbnail url="%%XK_HOME%%img/cat_%%id%%.jpg" />
       
 <mediaDisplay name="threePartsView" 
 					showHeader="yes" 
