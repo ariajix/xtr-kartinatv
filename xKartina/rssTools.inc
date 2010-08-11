@@ -198,5 +198,85 @@ function drawEpgItemTemplate($program, $nowTime, $hasArchive, $openRef,$channelI
     return $template;
 }
 
+function drawPlaylistsTemplate($playlists) {
+	
+	if(count($playlists) == 1) {
+		return drawPlayListItemsTemplate($playlists[0]);
+	}
+	
+	//display list of lists
+	$templateFileName = "templates/".TEMPLATE."/".PLAYLISTS_TEMPLATE;
+	
+	// file should exist
+	if (! is_readable($templateFileName )) {
+    	return;
+	}
+    $template = readLocalFile($templateFileName );
+    
+    $template = tmplReplace("XK_HOME",XK_HOME,$template);
+    if(count($playlists) > 1) {
+	 	$items = "";
+	  	foreach ($playlists as $playlist) {
+			$items = $items.drawPlayListFileTemplate($playlist);
+		}
+		$template = tmplReplace("playLists",$items,$template);
+    }
+    else {
+    
+    }
+    
+    return $template;
+}
+function drawPlayListFileTemplate($playlist) {
+	$templateFileName = "templates/".TEMPLATE."/".PLAYLIST_TEMPLATE;
+	
+	// file should exist
+	if (! is_readable($templateFileName )) {
+    	return;
+	}
+    $template = readLocalFile($templateFileName );
 
+    $template = tmplReplace("XK_HOME",XK_HOME,$template);
+    $template = tmplReplace("name",$playlist->name,$template);
+    $template = tmplReplace("uri",$playlist->uri,$template);
+    return $template;
+}
+
+function drawPlayListItemsTemplate($playlist) {
+	$templateFileName = "templates/".TEMPLATE."/".PLAYLIST_ITEMS_TEMPLATE;
+	// file should exist
+	if (! is_readable($templateFileName )) {
+    	return;
+	}
+    $template = readLocalFile($templateFileName );
+    
+    $template = tmplReplace("XK_HOME",XK_HOME,$template);
+    
+    $items = "";
+  	foreach ($playlist->items as $item) {
+		$items = $items.drawPlayListItemTemplate($item);
+	}
+	$template = tmplReplace("items",$items,$template);
+		
+    
+    return $template; 
+}
+
+function drawPlayListItemTemplate($item) {
+	$templateFileName = "templates/".TEMPLATE."/".PLAYLIST_ITEM_TEMPLATE;
+	// file should exist
+	if (! is_readable($templateFileName )) {
+    	return;
+	}
+    $template = readLocalFile($templateFileName );
+    
+    $template = tmplReplace("XK_HOME",XK_HOME,$template);
+	
+    $template = tmplReplace("name",$item->name,$template);
+    $template = tmplReplace("number",$item->number,$template);
+    $template = tmplReplace("length",$item->length,$template);
+    $template = tmplReplace("uri",$item->uri,$template);
+    
+    return $template; 
+}
 ?>

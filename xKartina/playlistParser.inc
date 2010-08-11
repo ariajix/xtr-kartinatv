@@ -5,7 +5,7 @@ class PlaylistItem {
     var $number;
     var $length;
     var $name;
-    var $uri;//take it from category
+    var $uri;
     
     function PlaylistItem ($number, $uri, $descr = null) {
     	$this->number	= $number;
@@ -23,13 +23,17 @@ class M3uParser {
     
     var $itemsAmount;
     var $items;
+    var $name;
+    var $uri;
 
     function M3uParser() {
         $this->itemsAmount = 0;
         $this->items = array();
     }
     
-    function parseFile($fileUri) {
+    function parseFile($fileUri,$name) {
+    	$this->name = $name;
+    	$this->uri  = $fileUri;
     	$lines = file($fileUri);
 		
 		foreach ($lines as $line_num => $line) {

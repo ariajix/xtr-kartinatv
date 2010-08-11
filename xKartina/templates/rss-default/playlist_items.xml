@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
- <mediaDisplay name="threePartsView" 
+<mediaDisplay name="threePartsView" 
 					showHeader="yes" 
 					headerXPC="20"
 					headerYPC="3"
@@ -15,16 +15,16 @@
 					itemImageXPC="12" 
 					itemImageYPC="14" 
 					itemImageHeightPC="8" 
-					itemImageWidthPC="8" 
+					itemImageWidthPC="0" 
 				
 					drawItemText="yes"
 					slidingItemText="yes"
 
 					itemGap="0"
-					itemXPC="20" 
+					itemXPC="12" 
 					itemYPC="14" 
 					itemHeightPC="8" 
-					itemWidthPC="70" 
+					itemWidthPC="75" 
 					itemPerPage="10" 
 					
 					fontSize="12"
@@ -42,8 +42,9 @@
         <idleImage>image/POPUP_LOADING_05.jpg</idleImage>
         <idleImage>image/POPUP_LOADING_06.jpg</idleImage>
 	</mediaDisplay>		
+
 <channel>
-	<menu></menu>
+<menu></menu>
 %%items%%
 </channel>
 </rss>
