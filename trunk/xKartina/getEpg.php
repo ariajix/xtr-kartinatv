@@ -24,7 +24,7 @@ function getTime($program, $ignoreTimeShift = false) {
 //	$offset = timezone_offset_get(new DateTimeZone("Europe/Berlin"),$date);
 //	$timeShift = $ignoreTimeShift || 1 != preg_match('/^.* -(\d+)$/', $_GET['title'], $m) ? 0 : $m[1];
 //    return $program->beginTime + $timeShift * 60 * 60 + TIME_ZONE_SECONDS;
-	if($ignoreTimeShift) {
+/*	if($ignoreTimeShift) {
 		return $program->beginTime;
 	}
 	$dateTimeZoneLocal = new DateTimeZone("Europe/Berlin");
@@ -37,6 +37,8 @@ function getTime($program, $ignoreTimeShift = false) {
 	$timeOffset = $dateTimeLocal->getOffset();
 	
     return $program->beginTime + $timeOffset;
+*/
+    return $program->beginTime;
 }
 
 function getEpg($id, $date) {

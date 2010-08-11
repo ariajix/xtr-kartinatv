@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?> 
+<rss version="2.0" xmlns:media="http://purl.org/dc/elements/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<mediaDisplay name="photoView"
+	rowCount=3
+	columnCount=5
+	drawItemText="no"
+	menuBorderColor="0:0:0"
+	sideColorBottom="0:0:0"
+	sideColorTop="0:0:0"
+	itemImageXPC="10"
+	itemOffsetXPC="7"
+	backgroundColor="0:0:0"
+	sliding="no"
+	idleImageXPC=45
+	idleImageYPC=42
+	idleImageWidthPC=10
+	idleImageHeightPC=16
+	>
+	<idleImage> image/POPUP_LOADING_01.jpg </idleImage>
+	<idleImage> image/POPUP_LOADING_02.jpg </idleImage>
+	<idleImage> image/POPUP_LOADING_03.jpg </idleImage>
+	<idleImage> image/POPUP_LOADING_04.jpg </idleImage>
+	<idleImage> image/POPUP_LOADING_05.jpg </idleImage>
+	<idleImage> image/POPUP_LOADING_06.jpg </idleImage>
+</mediaDisplay>
+
+<channel>
+<title>xKartina v 0.5</title>
+<item>
+      <title>Kartina.TV: Категории</title>
+      <link>http://127.0.0.1/media/sda1/xKartina/categoryList.php</link>
+      <media:thumbnail url="/tmp/usbmounts/sda1/xKartina/img/kartina-logo.jpg" />
+</item>
+	
+<item>
+	<title>Kartina.TV</title>
+	<link>http://127.0.0.1/media/sda1/xKartina/showCategory.php</link>
+	<media:thumbnail url="/tmp/usbmounts/sda1/xKartina/img/kartina-logo.jpg" />
+</item>
+<item>
+      <title>Плэйлисты</title>
+	  <link>http://127.0.0.1/media/sda1/xKartina/showPlaylists.php</link>
+      <media:thumbnail url="image/MVIX_LIVE_MAIN_ICON_COMINGSOON.jpg" />
+</item>
+</channel>
+</rss>
