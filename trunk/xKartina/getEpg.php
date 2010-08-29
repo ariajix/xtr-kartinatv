@@ -18,13 +18,7 @@ $arcTime = isset($_GET['archiveTime']) ? $_GET['archiveTime'] : $nowTime;
 
 
 function getTime($program, $ignoreTimeShift = false) {
-    # time shift will be taken directly from channel name
-//    $date = new DateTime();
-//	$date->setTimestamp($program->beginTime);
-//	$offset = timezone_offset_get(new DateTimeZone("Europe/Berlin"),$date);
-//	$timeShift = $ignoreTimeShift || 1 != preg_match('/^.* -(\d+)$/', $_GET['title'], $m) ? 0 : $m[1];
-//    return $program->beginTime + $timeShift * 60 * 60 + TIME_ZONE_SECONDS;
-/*	if($ignoreTimeShift) {
+	if($ignoreTimeShift) {
 		return $program->beginTime;
 	}
 	$dateTimeZoneLocal = new DateTimeZone("Europe/Berlin");
@@ -37,8 +31,8 @@ function getTime($program, $ignoreTimeShift = false) {
 	$timeOffset = $dateTimeLocal->getOffset();
 	
     return $program->beginTime + $timeOffset;
-*/
-    return $program->beginTime;
+
+#    return $program->beginTime;
 }
 
 function getEpg($id, $date) {
@@ -54,107 +48,6 @@ function getEpg($id, $date) {
     $parser->parse($program);
 
     return $parser;
-}
-
-function displayProgram_orig($program, $nowTime, $hasArchive, $openRef, $currentProgram = null) {
-    $class = "future";
-    $name = $program->name;
-    if ($program === $currentProgram) {
-        $class="current";
-        if ($hasArchive) {
-            $openRef .= "&gmt=" . $program->beginTime;
-        }
-        $name = EMBEDDED_BROWSER ?
-            "<marquee behavior=\"focus\">$name</marquee>" : $name;
-        $name = "<a href=\"$openRef\">$name</a>";
-    } else if (getTime($program, true) <= $nowTime) {
-        // no time shift offset for links, since it doesn't affect record
-        if ($hasArchive) {
-            $openRef .= "&gmt=" . $program->beginTime;
-            $name = EMBEDDED_BROWSER ?
-                "<marquee behavior=\"focus\">$name</marquee>" : $name;
-            $name = "<a href=\"$openRef\">$name</a>";
-        }
-        // but there is time shift for displayed style
-        if (getTime($program) <= $nowTime) {
-            $class="past";
-        }
-    }
-
-    $t = getTime($program);
-    $hour = date('H', $t) * 60 * 60 + date('i', $t) * 60 + date('s', $t);
-    if ($hour < EPG_START_OFFSET) {
-        $timeClass = "timeNight";
-        $beginTime = formatDate('H:i', $t);
-    } else {
-        $timeClass = "time";
-        $beginTime = date('H:i', $t);
-    }
-
-
-    $details = ! isset($program->details) || "" == $program->details ? "" :
-        "</tr><tr><td class=\"${class}-details\">$program->details</td>\n";
-
-    print "<tr>\n";
-    print "<td class=\"$timeClass\" align=\"center\">$beginTime</td>\n";
-    print "<td class=\"$class\" colspan=\"3\">\n";
-    print "<table width=\"100%\"><tr>\n";
-    print '<td>' . $name . "</td>\n";
-    print $details;
-    print "</tr></table>\n";
-    print "</td></tr>\n";
-}
-
-function displayProgram($program, $nowTime, $hasArchive, $openRef, $currentProgram = null) {
-    $class = "future";
-    $name = $program->name;
-    if ($program === $currentProgram) {
-        $class="current";
-        if ($hasArchive) {
-            $openRef .= "&amp;gmt=" . $program->beginTime;
-        }
-    } else if (getTime($program, true) <= $nowTime) {
-    	// no time shift offset for links, since it doesn't affect record
-        if ($hasArchive) {
-            $openRef .= "&amp;gmt=" . $program->beginTime;
-        }
-        // but there is time shift for displayed style
-        if (getTime($program) <= $nowTime) {
-            $class="past";
-        }
-    }
-
-    $t = getTime($program);
-    $hour = date('H', $t) * 60 * 60 + date('i', $t) * 60 + date('s', $t);
-    if ($hour < EPG_START_OFFSET) {
-        $timeClass = "timeNight";
-        $beginTime = formatDate('H:i', $t);
-    } else {
-        $timeClass = "time";
-        $beginTime = date('H:i', $t);
-    }
-
-/*    $chanelItem = '<item>';
-	$title = "";
-
-	$title = '['.$beginTime.']   '. $name;
-	
-	$chanelItem .= '<title>'.$program->name.'</title>';
-	
-	$chanelItem .= '<description>'.  $program->details . '</description>';
-	$chanelItem .= '<link>'.XK_HOME.$openRef.'</link>';
-	$chanelItem .= '<beginTime>'. $program->beginTime.'</beginTime>';	
-	$chanelItem .= '<humanTime>'. $beginTime.'</humanTime>';
-	$chanelItem .= '<enclosure url="'.XK_HOME.$openRef.'" type="video/mp4" />';
-	$chanelItem .= '<media:thumbnail url="'. $logo . '" />';
-	$chanelItem .=  '<mediaDisplay name=threePartsView
-					backgroundColor="' . formatColor($category->color) . '"
-					/>';  
-	$chanelItem .= '</item>';
-	
-	return $chanelItem;    
-	*/
-    return "";
 }
 ?>
 
@@ -217,7 +110,6 @@ function displayProgram($program, $nowTime, $hasArchive, $openRef, $currentProgr
 
 
 <?php
-//    echo $parser->hasArchive ? "green" : "gray"
     if (count($programs) == 0) {
         print '<tr><td class="no-data" colspan="4" align="center">';
         print '<table><tr><td>';
@@ -233,34 +125,8 @@ function displayProgram($program, $nowTime, $hasArchive, $openRef, $currentProgr
         $openRef .= ! isset($_GET['title'])  ? "" : "&title="  . $_GET['title'];
         $openRef .= ! isset($_GET['vid'])    ? "" : "&vid="    . $_GET['vid'];
     }
-	/*
- 	foreach ($programs as $program) {
-		echo displayProgram($program, $nowTime, $parser->hasArchive,
-	    $openRef, $currentProgram);
-	}
-	*/
-    
-		echo drawEpgTemplate($programs, $nowTime, $parser->hasArchive,
-	    $openRef,$id, $currentProgram);
-/*    
-    # define previous page link if it wasn't already
-    if (! isset($prevPage)) {
-        $time = $arcTime -  EPG_START_OFFSET;
-        $time -= 24 * 60 * 60;
-        $time = mktime(23, 59, 59,
-            date("n", $time), date("j", $time), date("Y", $time));
-        $prevPage = $time + EPG_START_OFFSET;
-    }
 
-    # define next page link if it wasn't already
-    if (! isset($nextPage)) {
-        $time = $arcTime - EPG_START_OFFSET;
-        $time += 24 * 60 * 60;
-        $time = mktime(0, 0, 1,
-            date("n", $time), date("j", $time), date("Y", $time));
-        $nextPage = $time + EPG_START_OFFSET;
-    }
-*/
-  
-#  displayRssFooter();
+	echo drawEpgTemplate($programs, $arcTime, $parser->hasArchive,
+	    $openRef,$id, $currentProgram);
+
 ?>

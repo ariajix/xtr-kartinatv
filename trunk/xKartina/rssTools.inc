@@ -127,15 +127,49 @@ function drawEpgTemplate($programs, $nowTime, $hasArchive, $openRef, $channelId,
 
     $template = readLocalFile($templateFileName);
     
-    $titleTime = formatDate('d.m H:i', $nowTime);
+    $titleTime = formatDate('d.m.Y',  $nowTime -  EPG_START_OFFSET);
 	
-    $template = tmplReplace("nowTime",$titleTime ,$template);
+    $template = tmplReplace("XK_HOME",XK_HOME,$template);
+    $template = tmplReplace("epgDate",$titleTime ,$template);
+    
+    
+	#define previous page link
+    
+	$time = $nowTime -  EPG_START_OFFSET;
+    $time -= 24 * 60 * 60;
+	$time = mktime(23, 59, 59, date("n", $time), date("j", $time), date("Y", $time));
+    $prevPage = $time + EPG_START_OFFSET;
+    $template = tmplReplace("prevDayTime",$prevPage ,$template);
+    
+    #define next page link
+    $time = $nowTime - EPG_START_OFFSET;
+    $time += 24 * 60 * 60;
+    $time = mktime(0, 0, 1,
+    date("n", $time), date("j", $time), date("Y", $time));
+    if($time < time()) {
+    	$nextPage = $time + EPG_START_OFFSET;
+    }
+    else {
+    	$nextPage = $nowTime;
+    }
+            
+    $template = tmplReplace("nextDayTime",$nextPage ,$template);
+    
+    $template = tmplReplace("id",$channelId ,$template);
     
     $items = "";
+    $index = 0;
+    $selectedIndex = 0;
   	foreach ($programs as $program) {
 		$items = $items.drawEpgItemTemplate($program, $nowTime, $hasArchive,
 	    $openRef, $channelId,  $currentProgram);
+	    
+	    if($currentProgram == $program) {
+	    	$selectedIndex = $index;
+	    }
+	    $index = $index +1;
 	}
+	$template = tmplReplace("selectedIndex",$selectedIndex ,$template);
     return tmplReplace("items",$items,$template);
 }
 

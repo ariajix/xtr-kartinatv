@@ -2,3 +2,5 @@
 -RSS changes/speed improvements (thank to Exe and other xTreamer Developer community)
 -M3U playlist support incl. UTF-8 support. Put your m3u playlists into "playlists" directory.
 -Menu hack for EPG removed due to changes in RSS it just jumpToLink() again
+29.08.2010 v. 0.6
+-EPG/Archive changes. Day navigation with PGUP/PGDOWN,select current programm in EPG.
