@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <mediaDisplay name="threePartsView" 
-					showHeader="yes" 
+					showHeader="no" 
 					headerXPC="20"
 					headerYPC="3"
 					showDefaultInfo="no"
@@ -43,7 +43,35 @@
 					idleImageHeightPC="15" 
 					viewAreaWidthPC="100"
 					infoYPC="95"
-					>	
+					>
+	<onEnter>
+		index = %%selectedIndex%%;
+		setItemFocus(index);
+	</onEnter>					
+		<onUserInput>
+			userInput = currentUserInput();
+			if ( userInput == "PG" ) {
+				url = "%%XK_HOME%%getEpg.php?id=%%id%%&amp;archiveTime=%%prevDayTime%%";
+				jumpToLink("epg_link");				
+				redrawDisplay();
+				"true";
+			} else {
+			if ( userInput == "PD" ) {
+				url = "%%XK_HOME%%getEpg.php?id=%%id%%&amp;archiveTime=%%nextDayTime%%";
+				jumpToLink("epg_link");				
+				redrawDisplay();
+				"true";
+			} else {
+				"false";
+			}
+		</onUserInput>
+		<text redraw="yes" tailDots="yes" fontSize="14" lines="1"
+					offsetXPC="18" offsetYPC="3" widthPC="80" heightPC="5" 
+					backgroundColor="0:0:0" foregroundColor="0:154:205">
+			<script>
+				 "Программа передач за %%epgDate%%";
+			</script>
+		</text>
 		<text redraw="yes" tailDots="yes" fontSize="14" lines="5"
 					offsetXPC="8" offsetYPC="83" widthPC="80" heightPC="17" 
 					backgroundColor="0:0:0" foregroundColor="0:154:205">
@@ -71,6 +99,14 @@
         <idleImage>image/POPUP_LOADING_05.jpg</idleImage>
         <idleImage>image/POPUP_LOADING_06.jpg</idleImage>
   </mediaDisplay>
+  <!-- link used by the jumpToLink command (must be outside of the mediaDisplay item) -->
+	<epg_link>
+			<link>
+				<script>
+					url;
+				</script>
+			</link>
+	</epg_link>  
 <channel>
 <menu></menu>
 %%items%%
