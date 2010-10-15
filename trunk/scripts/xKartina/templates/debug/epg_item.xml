@@ -1,0 +1,6 @@
+<tr>
+	<td><img src="http://iptv.kartina.tv/img/ico/%%id%%.gif" /></td>
+	<td><a href="%%XK_HOME%%%%openRef%%">%%name%%</a></td>
+	<td>%%humanTime%%</td>
+	<td>%%description%%</td>
+</tr>
