@@ -1,7 +1,0 @@
-<tr>
-	<td><img src="http://iptv.kartina.tv/img/ico/%%id%%.gif" /></td>
-	<td><a href="%%linkUrl%%">%%name%%</a></td>
-	<td>%%beginTime%% - %%endTime%%</td>
-	<td>%%program%%</td>
-	<td><a href="%%XK_HOME%%getEpg.php?id=%%id%%" >EPG</a></td>
-</tr>

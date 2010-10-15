@@ -1,8 +1,0 @@
-<html>
-<body>
-<h3>%%nowTime%%</h3>
-<table>
-%%items%%
-</table>		
-</body>
-</html>

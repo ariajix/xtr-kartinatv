@@ -1,9 +1,0 @@
-<item>
-	<title>%%name%%</title>
-	<humanTime>%%humanTime%%</humanTime>
-	<description>%%description%%</description>
-	<link>%%XK_HOME%%%%openRef%%</link>
-	<epg_link>%%XK_HOME%%%%openRef%%</epg_link>
-	<enclosure url="%%XK_HOME%%%%openRef%%" type="video/mp4" />
-	<media:thumbnail url="http://iptv.kartina.tv/img/ico/%%id%%.gif" />
-</item>
