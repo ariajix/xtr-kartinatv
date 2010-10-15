@@ -1,0 +1,4 @@
+	<submenu>
+		<title>%%name%%</title>
+		<link>%%XK_HOME%%getEpg.php?id=%%id%%</link>
+	</submenu>

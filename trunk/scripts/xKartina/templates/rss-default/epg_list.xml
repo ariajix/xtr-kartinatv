@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<mediaDisplay name="threePartsView" 
+					showHeader="no" 
+					headerXPC="20"
+					headerYPC="3"
+					showDefaultInfo="no"
+					
+					capWidthPC="0"
+				
+					imageLeftSide="image/MVIX_LIVE_MAIN_BG_2.jpg" 
+					sideLeftWidthPC="10" 
+					sideRightWidthPC="0" 
+					sideColorRight="0:0:0" 
+					sideColorLeft="0:0:0" 
+					
+					itemImageXPC="9" 
+					itemImageYPC="10" 
+					itemImageHeightPC="8" 
+					itemImageWidthPC="8" 
+				
+					drawItemText="yes"
+					slidingItemText="yes"
+
+					itemGap="0"
+					itemXPC="18" 
+					itemYPC="10"
+					
+					itemHeightPC="8" 
+					itemWidthPC="80" 
+					itemPerPage="9" 
+					
+					menuXPC="1"
+					menuYPC="1"
+					menuWidthPC="0"
+					menuHeightPC="0"
+					menuPerPage="1"
+					
+					fontSize="14"
+					idleImageXPC="45" 
+					idleImageYPC="42" 
+					idleImageWidthPC="10" 
+					idleImageHeightPC="15" 
+					viewAreaWidthPC="100"
+					infoYPC="95"
+					>
+	<onEnter>
+		index = %%selectedIndex%%;
+		setItemFocus(index);
+	</onEnter>					
+		<onUserInput>
+			userInput = currentUserInput();
+			if ( userInput == "PG" ) {
+				url = "%%XK_HOME%%getEpg.php?id=%%id%%&amp;archiveTime=%%prevDayTime%%";
+				jumpToLink("epg_link");				
+				redrawDisplay();
+				"true";
+			} else {
+			if ( userInput == "PD" ) {
+				url = "%%XK_HOME%%getEpg.php?id=%%id%%&amp;archiveTime=%%nextDayTime%%";
+				jumpToLink("epg_link");				
+				redrawDisplay();
+				"true";
+			} else {
+				"false";
+			}
+		</onUserInput>
+		<text redraw="yes" tailDots="yes" fontSize="14" lines="1"
+					offsetXPC="18" offsetYPC="3" widthPC="80" heightPC="5" 
+					backgroundColor="0:0:0" foregroundColor="0:154:205">
+			<script>
+				 "Программа передач за %%epgDate%%";
+			</script>
+		</text>
+		<text redraw="yes" tailDots="yes" fontSize="14" lines="5"
+					offsetXPC="8" offsetYPC="83" widthPC="80" heightPC="17" 
+					backgroundColor="0:0:0" foregroundColor="0:154:205">
+			<script>
+				 getItemInfo(getFocusItemIndex(), "description");
+			</script>
+		</text>
+
+ 		<itemDisplay>
+    		<text offsetXPC="2" offsetYPC="10" widthPC="90" heightPC="30" fontSize="11" backgroundColor="-1:-1:-1" foregroundColor="200:200:200">
+      			<script>getItemInfo("title");</script>
+    		</text>
+		
+			<text offsetXPC="2" offsetYPC="45" widthPC="15" heightPC="40" fontSize="12" backgroundColor="-1:-1:-1" foregroundColor="0:200:200">
+		    	<script>getItemInfo("humanTime");</script>
+		  	</text>
+			<text offsetXPC="17" offsetYPC="28" widthPC="80" heightPC="80" fontSize="12" backgroundColor="-1:-1:-1" foregroundColor="200:200:0">
+    			<script>getItemInfo("description");</script>
+  			</text>
+		</itemDisplay>
+        <idleImage>image/POPUP_LOADING_01.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_02.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_03.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_04.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_05.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_06.jpg</idleImage>
+  </mediaDisplay>
+  <!-- link used by the jumpToLink command (must be outside of the mediaDisplay item) -->
+	<epg_link>
+			<link>
+				<script>
+					url;
+				</script>
+			</link>
+	</epg_link>  
+<channel>
+<menu></menu>
+%%items%%
+</channel>
+</rss>

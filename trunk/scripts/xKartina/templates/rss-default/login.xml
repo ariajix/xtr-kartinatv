@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<bookmark> Kartina TV Login </bookmark>
+
+   <onEnter>
+     userName = "%%username%%";
+     passWord = "%%password%%";
+     titleString = "Картина ТВ Логин";
+   </onEnter>
+
+   <mediaDisplay     
+         name=onePartView 
+         showDefaultInfo=no
+         autoSelectMenu=no
+         autoSelectItem=no
+         showHeader=no
+   
+         itemPerPage = 3
+         
+         itemXPC = 55
+         itemYPC = 35
+         itemWidthPC = 20
+         itemHeightPC = 8
+         itemGap = 0
+   
+   
+         sideLeftWidthPC = 100
+         sideRightWidthPC = 0
+         
+         itemBackgroundColor = 0:0:0
+         backgroundColor = 0:0:0
+   
+         itemImageXPC = 34.6
+         itemImageWidthPC = 0
+         itemImageHeightPC = 0
+   >
+   <text offsetXPC="15" offsetYPC="25" widthPC="70" heightPC="50" 
+      backgroundColor="50:50:50" cornerRounding=15 />
+   
+   <text offsetXPC="16" offsetYPC="26.5" widthPC="68" heightPC="47.3" 
+      backgroundColor="20:20:20" cornerRounding=15 />
+      
+   <image offsetXPC="17" offsetYPC="35" widthPC="15" heightPC="25" >
+      http://iptv.kartina.tv/img/keys.png
+   </image>
+
+   <text offsetXPC="35" offsetYPC="35" widthPC="20" heightPC="8" fontSize="14" 
+      backgroundColor="20:20:20">Абонемент</text>
+   
+   <!-- USERNAME -->
+   <text offsetXPC="55" offsetYPC="35" widthPC="20" heightPC="8" fontSize="14" 
+      cornerRounding=5><script>getItemInfo( 0, "title");</script>
+      <backgroundColor>
+         <script>
+            if ( 0 == getFocusItemIndex() )"200:200:200"; else "80:80:80";
+         </script>
+      </backgroundColor>
+   </text>
+   
+   <text offsetXPC="35" offsetYPC="45" widthPC="20" heightPC="8" fontSize="14"
+      backgroundColor="20:20:20">Пароль</text>
+   
+   <!-- PASSWORD -->
+   <text offsetXPC="55" offsetYPC="45" widthPC="20" heightPC="8" fontSize="14" 
+      cornerRounding=5 ><script>getItemInfo( 1, "title");</script>
+      <backgroundColor>
+         <script>
+            if ( getFocusItemIndex() == 1)"200:200:200"; else "80:80:80";
+         </script>
+      </backgroundColor>
+   </text>
+  
+   <text align="center" offsetXPC="55" offsetYPC="55" widthPC="20" heightPC="8" fontSize="14" 
+      cornerRounding=5 >Вход
+      <backgroundColor>
+         <script>
+            if ( getFocusItemIndex() == 2)"180:80:10"; else "0:0:0";
+         </script>
+      </backgroundColor>
+      <foregroundColor>
+         <script>
+            if ( getFocusItemIndex() == 2)"0:0:0"; else "250:250:250";
+         </script>
+      </foregroundColor>
+   </text>
+
+   <text align="center" offsetXPC="20" offsetYPC="10" widthPC="60" heightPC="10" fontSize=14 >
+   <script>
+   	titleString;
+   </script>
+   </text>
+   
+   <!-- Message -->
+   <text align="center" offsetXPC="10" offsetYPC="80" widthPC="80" heightPC="10" fontSize=14 foregroundColor="250:0:0" lines="2" >
+   		%%msgString%%
+   </text>
+</mediaDisplay>
+   <login>
+         <link>
+            <script>
+               url;
+            </script>
+         </link>
+   </login>
+
+<channel>
+        <title> Kartina TV Login </title>
+        <link>login.rss</link>
+<item>
+   <title>
+      <script>
+         displayName = "Абонемент?";
+         if (userName != null){
+            displayName = userName;
+         }
+         displayName;
+      </script>
+   </title>
+
+   <onClick>
+      inputUser = getInput("userName", "doModal");
+      if (inputUser != null)
+      {
+         userName = inputUser;
+      }
+      redrawDisplay();
+   </onClick>
+</item>
+
+<item>
+   <title>
+      <script>
+         displayTitle = "Пароль?";
+         if (passWord != null)
+         {
+            displayTitle = "******";
+         }
+         displayTitle;
+      </script>
+   </title>
+   <onClick>
+      inputPass = getInput("passWord", "doModal");
+      if (inputPass != NULL)
+      {
+         passWord = inputPass;
+      }
+      redrawDisplay();
+   </onClick>
+</item>
+
+<item>
+   <title>Sign In</title>
+   <onClick>
+      if (passWord == null || userName == null)
+      {
+         titleString = "Абонемент или Паhоль неправильный";
+         redrawDisplay();
+      }
+      else
+      {
+         url="%%XK_HOME%%login.php?username=" + userName + "&amp;password=" + passWord;
+         jumpToLink("login");          
+         redrawDisplay();        
+      }
+   </onClick>
+</item>
+
+</channel>
+</rss>

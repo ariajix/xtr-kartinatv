@@ -1,0 +1,5 @@
+<item>
+	<title>%%name%%</title>
+	<link>%%XK_HOME%%showPlaylists.php?playlist=%%name%%</link>
+	<media:thumbnail url="image/play.jpg" />
+</item>

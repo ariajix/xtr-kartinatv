@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <mediaDisplay name="threePartsView" 
+					showHeader="no" 
+					headerXPC="20"
+					headerYPC="3"
+					showDefaultInfo="no"
+				
+					imageLeftSide="image/MVIX_LIVE_MAIN_BG_2.jpg" 
+					sideLeftWidthPC="10" 
+					sideRightWidthPC="0" 
+					sideColorRight="0:0:0" 
+					sideColorLeft="0:0:0" 
+					
+					itemImageXPC="10" 
+					itemImageYPC="12" 
+					itemImageHeightPC="8" 
+					itemImageWidthPC="7" 
+					
+					focusFontColor="255:255:255"
+        			unFocusFontColor="190:190:190"
+        			focusBorderColor="0:0:0" 
+        			unFocusBorderColor="0:0:0" 
+				
+					drawItemText="yes"
+					slidingItemText="yes"
+
+					itemGap="0"
+					itemXPC="17" 
+					itemYPC="12" 
+					itemHeightPC="8" 
+					itemWidthPC="25" 
+					itemPerPage="10" 
+					cornerRounding="5" 
+					
+					fontSize="16"
+					idleImageXPC="45" 
+					idleImageYPC="42" 
+					idleImageWidthPC="10" 
+					idleImageHeightPC="15" 
+					viewAreaWidthPC="100"
+					infoYPC="95"
+					>
+
+		<onUserInput>
+			userInput = currentUserInput();
+			if ( userInput == "1" ) {
+				url = "%%XK_HOME%%login.php";
+				jumpToLink("setup_link");				
+				redrawDisplay();
+				"true";
+			} else {
+				"false";
+			}
+		</onUserInput>
+		
+        <idleImage>image/POPUP_LOADING_01.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_02.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_03.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_04.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_05.jpg</idleImage>
+        <idleImage>image/POPUP_LOADING_06.jpg</idleImage>
+<!-- header -->
+<text align="center" offsetXPC="40" offsetYPC="1" widthPC="20" heightPC="10" fontSize="14" foregroundColor="255:255:255" >Kartina.TV</text>
+<text align="right" offsetXPC="43" offsetYPC="1" widthPC="15" heightPC="8" fontSize="10" foregroundColor="255:0:0" >beta</text>
+<!-- Footer -->
+<text align="left" offsetXPC="10" offsetYPC="91" widthPC="20" heightPC="9" fontSize="12" foregroundColor="255:255:255" backgroundColor="0:0:0" redraw=yes>
+<script>
+ 		getPageInfo("focusItemIndex") + "/" + getPageInfo("itemCount");  
+</script>
+</text>
+
+<text align="left" offsetXPC="50" offsetYPC="91" widthPC="80" heightPC="10" fontSize="12" foregroundColor="170:170:170" >*Нажмите</text>
+<image offsetXPC="62" offsetYPC="94" widthPC="4" heightPC="4" >http://127.0.0.1/rc2/1.png</image>
+<text align="left" offsetXPC="65" offsetYPC="91" widthPC="80" heightPC="10" fontSize="12" foregroundColor="170:170:170" >чтобы изменить данные аккаунта.</text> 
+
+              
+	</mediaDisplay>	
+  <!-- link used by the jumpToLink command (must be outside of the mediaDisplay item) -->
+	<setup_link>
+			<link>
+				<script>
+					url;
+				</script>
+			</link>
+	</setup_link>
+<channel>
+	<menu></menu>
+	<item>
+		<title>Все категории</title>
+		<link>%%XK_HOME%%showCategory.php</link>
+		<media:thumbnail url="%%XK_HOME%%img/cat_0.jpg" />
+	</item>
+%%items%%
+</channel>
+</rss>
