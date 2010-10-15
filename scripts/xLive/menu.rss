@@ -26,22 +26,22 @@
 </mediaDisplay>
 
 <channel>
-<title>xKartina v 0.5</title>
+<title>xKartina v 0.7.1</title>
 <item>
-      <title>Kartina.TV: Категории</title>
-      <link>http://127.0.0.1/media/sda1/xKartina/categoryList.php</link>
-      <media:thumbnail url="/tmp/usbmounts/sda1/xKartina/img/kartina-logo.jpg" />
+      <title>Kartina.TV</title>
+      <link>http://127.0.0.1/media/sda1/scripts/xKartina/categoryList.php</link>
+      <media:thumbnail url="/tmp/usbmounts/sda1/scripts/xKartina/img/kartina-logo.png" />
 </item>
 	
 <item>
 	<title>Kartina.TV</title>
-	<link>http://127.0.0.1/media/sda1/xKartina/showCategory.php</link>
-	<media:thumbnail url="/tmp/usbmounts/sda1/xKartina/img/kartina-logo.jpg" />
+	<link>http://127.0.0.1/media/sda1/scripts/xKartina/showCategory.php</link>
+	<media:thumbnail url="/tmp/usbmounts/sda1/scripts/xKartina/img/kartina-logo2.png" />
 </item>
 <item>
       <title>Плэйлисты</title>
-	  <link>http://127.0.0.1/media/sda1/xKartina/showPlaylists.php</link>
-      <media:thumbnail url="image/MVIX_LIVE_MAIN_ICON_COMINGSOON.jpg" />
+	  <link>http://127.0.0.1/media/sda1/scripts/xKartina/showPlaylists.php</link>
+      <media:thumbnail url="/tmp/usbmounts/sda1/scripts/xKartina/img/playlist.png" />
 </item>
 </channel>
 </rss>
