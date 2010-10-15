@@ -1,9 +1,0 @@
-	<item>
-		<title>%%name%%</title>
-		<humanTime>%%beginTime%% - %%endTime%%</humanTime>
-		<description>%%program%%</description>
-		<link>%%linkUrl%%</link>
-		<epg_link>%%XK_HOME%%getEpg.php?id=%%id%%</epg_link>
-		<enclosure url="%%linkUrl%%" type="video/mp4" />
-		<media:thumbnail url="http://iptv.kartina.tv/img/ico/%%id%%.gif" />
-	</item>
