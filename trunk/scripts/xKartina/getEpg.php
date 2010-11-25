@@ -21,18 +21,19 @@ function getTime($program, $ignoreTimeShift = false) {
 	if($ignoreTimeShift) {
 		return $program->beginTime;
 	}
-	$dateTimeZoneLocal = new DateTimeZone("Europe/Berlin");
+
+	return $program->beginTime;
+	
+/*
+	$dateTimeZoneLocal = new DateTimeZone(date_default_timezone_get());
 	$dateTimeZoneUTC = new DateTimeZone("UTC");
 
 
 	$dateTimeLocal = new DateTime("now", $dateTimeZoneLocal);
-	$dateTimeutc = new DateTime("now", $dateTimeZoneUTC);
-
 	$timeOffset = $dateTimeLocal->getOffset();
 	
     return $program->beginTime + $timeOffset;
-
-#    return $program->beginTime;
+*/
 }
 
 function getEpg($id, $date) {
