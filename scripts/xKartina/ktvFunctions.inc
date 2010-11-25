@@ -9,7 +9,6 @@
 
 require_once "settings.inc";
 require_once "tools.inc";
-require_once "lang.inc";
 require_once "loginDialog.inc";
 
 		global $username;

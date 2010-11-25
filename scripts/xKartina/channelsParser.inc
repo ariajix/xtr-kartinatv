@@ -9,7 +9,6 @@
 
 require_once("pageTools.inc");
 require_once("settings.inc");
-require_once("sorter.inc");
 
 class Program {
     var $name;

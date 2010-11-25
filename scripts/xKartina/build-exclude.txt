@@ -1,0 +1,6 @@
+﻿auth.ini
+build-exclude.txt
+make-release.cmd
+img-work\
+rss-extended\
+*.m3u

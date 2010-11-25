@@ -93,23 +93,18 @@ define("EMBEDDED_BROWSER",
     FALSE !== strpos($_SERVER['HTTP_USER_AGENT'], 'Syabas'));
 
 # set right timezone
-date_default_timezone_set('Europe/Berlin'); 
-#if time before 01.01.2010 00:00:00 - updete wia ntp
-if((1262300400.0 - time()) > 0) {
+//date_default_timezone_set('Europe/Berlin'); 
+date_default_timezone_set('Europe/Berlin');
+#if time before 01.01.2010 00:00:00 - update wia ntp
+/*if((1262300400.0 - time()) > 0) {
 	$ntpServ = "ntps1-0.uni-erlangen.de";
 	#update system Time
 	system("rdate -s ".$ntpServ);
 	#update hw clock
 	system("hwclock -w");
-}
-define("UTC_TIME", time());	
+}*/
+define("NOW_TIME", time());	
 define("TIME_STRING", date(DATE_RFC822));
-
-# time zone can be parsed out from the time string
-define("TIME_ZONE_SECONDS", 1 == preg_match('/((\+|-)\d\d)(\d\d)$/', 
-    TIME_STRING, $matches) ? ($matches[1] * 60 + $matches[3]) * 60 : 0);
-# now time can be calculated using UTC time and time zone
-define("NOW_TIME", UTC_TIME + TIME_ZONE_SECONDS);
 
 # date format accepted by EPG
 define("EPG_DATE_FORMAT", 'dmy');

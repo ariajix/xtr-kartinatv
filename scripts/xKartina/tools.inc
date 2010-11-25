@@ -5,7 +5,7 @@
 # Author: consros 2009                                                      #
 #############################################################################
 
-require_once "lang.inc";
+define("LANG_WEEK_DAYS", "Вс,Пн,Вт,Ср,Чт,Пт,Сб");
 
 function compactHtml($html) {
     # compact all to a single line

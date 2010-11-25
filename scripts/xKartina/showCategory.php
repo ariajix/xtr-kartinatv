@@ -2,7 +2,7 @@
 require_once "config.inc";
 require_once "rssTools.inc";
 require_once "tools.inc";
-require_once "uft8_tools.inc";
+
 require_once "channelsParser.inc";
 require_once "ktvFunctions.inc";
 

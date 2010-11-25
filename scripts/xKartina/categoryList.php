@@ -13,15 +13,7 @@ if (! isset($_SESSION['channelsList']) || ! isset($_SESSION['lastUpdate']) ||
 	
     # renew the list using existing cookie
     $ktvFunctions = new KtvFunctions();
-/*    //check authorization
-    global $username;
-	global $password;
-	if(!$ktvFunctions ->authorize() || ($username >= '140' && $username <='149')) {
-		//$msg = "Демо Аккаунт!";
-    	//show login dialog
-    	header( 'Location: '.XK_HOME.'login.php') ;
-    }
-    */
+
     $rawList = $ktvFunctions->getChannelsList();
 
     # remember new state
@@ -48,16 +40,4 @@ $limit = CL_ITEMS_PER_PAGE;
 
 echo drawCategoryListTemplate($channelsParser->categories);
 
-/*
-foreach ($channelsParser->categories as $category) {
-    $itemsToDisplay[] = $category;
-    $currentEntry++;
-}
-
-# display collected items
-foreach ($itemsToDisplay as $item) {
-    echo   displayCategory($item);
-}
-displayRssFooter();
-*/
 ?>
