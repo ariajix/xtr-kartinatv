@@ -89,7 +89,7 @@
 	<item>
 		<title>Все категории</title>
 		<link>%%XK_HOME%%showCategory.php</link>
-		<media:thumbnail url="%%XK_HOME%%img/cat_0.jpg" />
+		<media:thumbnail url="%%XK_HOME%%img/cat_0.png" />
 	</item>
 %%items%%
 </channel>
