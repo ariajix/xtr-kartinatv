@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<onEnter>
+  	setRefreshTime(5000);
+  	refreshCnt = 12;
+  	lastRefresh = date("%s");
+  	refreshFreq = 60;
+	loadXMLFile( "%%selfUrl%%");
+	SwitchViewer(7);
+</onEnter>
+
+<onRefresh>
+	refreshCnt = refreshCnt - 1;
+    if ((date("%s") - lastRefresh)  >= refreshFreq) {
+    	lastRefresh = date("%s");
+    	download_ok = loadXMLFile( "%%selfUrl%%");
+	    redrawDisplay();
+    }
+    else {
+    	redrawDisplay();
+	}
+</onRefresh>
+
+<onExit>
+  	setRefreshTime(-1);
+</onExit>
+
 <mediaDisplay name="threePartsView" 
 					showHeader="no" 
 					headerXPC="20"
@@ -68,21 +94,19 @@
 		<text redraw="yes" tailDots="yes" fontSize="14" lines="5"
 					offsetXPC="8" offsetYPC="83" widthPC="80" heightPC="17" 
 					backgroundColor="0:0:0" foregroundColor="0:154:205">
-			<script>
-				 getItemInfo(getFocusItemIndex(), "description");
-			</script>
+			<script>getXMLText("rss","channel","item",getFocusItemIndex(), "description");</script>
 		</text>
 
  		<itemDisplay>
     		<text offsetXPC="2" offsetYPC="10" widthPC="90" heightPC="30" fontSize="11" backgroundColor="-1:-1:-1" foregroundColor="200:200:200">
-      			<script>getItemInfo("title");</script>
+      			<script>getXMLText("rss","channel","item",getQueryItemIndex(), "title");</script>
     		</text>
 		
 			<text offsetXPC="2" offsetYPC="45" widthPC="15" heightPC="40" fontSize="12" backgroundColor="-1:-1:-1" foregroundColor="0:200:200">
-		    	<script>getItemInfo("humanTime");</script>
+      			<script>getXMLText("rss","channel","item",getQueryItemIndex(), "humanTime");</script>		    	
 		  	</text>
 			<text offsetXPC="17" offsetYPC="28" widthPC="80" heightPC="80" fontSize="12" backgroundColor="-1:-1:-1" foregroundColor="200:200:0">
-    			<script>getItemInfo("description");</script>
+    			<script>getXMLText("rss","channel","item",getQueryItemIndex(), "description");</script>
   			</text>
 		</itemDisplay>
         <idleImage>image/POPUP_LOADING_01.jpg</idleImage>

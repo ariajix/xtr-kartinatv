@@ -29,7 +29,8 @@ xcopy /Q /I ..\%NAME%\*.inc %TEMP%\%NAME%\
 xcopy /Q /I ..\%NAME%\*.php %TEMP%\%NAME%\
 xcopy /Q /I ..\%NAME%\*.ini %TEMP%\%NAME%\
 xcopy /Q /I ..\%NAME%\*.txt %TEMP%\%NAME%\
-xcopy /Q /I *.xml %TEMP%\%NAME%\
+xcopy /Q /I version.xml %TEMP%\%NAME%\
+xcopy /Q /I /E /Y ..\%NAME%\for-release\* %TEMP%\%NAME%\
 
 echo Packing files...
 if "%newVersion%" NEQ "" set ZIP=%ZIP%-%newVersion%
