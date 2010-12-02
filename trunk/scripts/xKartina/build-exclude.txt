@@ -3,4 +3,6 @@ build-exclude.txt
 make-release.cmd
 img-work\
 rss-extended\
+category\
+for-release\
 *.m3u

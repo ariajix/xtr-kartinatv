@@ -1,6 +1,5 @@
 <item>
 	<title>%%name%%</title>
 	<link>%%uri%%</link>
-	<media:thumbnail url="%%XK_HOME%%img/%%name%%.jpg" />
-	<enclosure url="%%uri%%" type="video/mp4" />
+	<enclosure url="%%uri%%"  />
 </item>

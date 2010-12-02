@@ -2,14 +2,18 @@
 <rss version="2.0" xmlns:media="http://purl.org/dc/elements/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
 
 <mediaDisplay name="photoView"
-	rowCount=3
-	columnCount=5
+	rowCount=1
+	columnCount=3
 	drawItemText="no"
 	menuBorderColor="0:0:0"
 	sideColorBottom="0:0:0"
 	sideColorTop="0:0:0"
 	itemImageXPC="10"
-	itemOffsetXPC="7"
+        itemOffsetXPC="5"
+        itemOffsetYPC="35"
+        itemGapXPC="10"
+        bottomYPC="88"
+	
 	backgroundColor="0:0:0"
 	sliding="no"
 	idleImageXPC=45
@@ -26,15 +30,15 @@
 </mediaDisplay>
 
 <channel>
-<title>xKartina v 0.7.1</title>
+<title>xKartina v 0.7.2</title>
 <item>
-      <title>Kartina.TV</title>
+      <title>Kartina.TV - по категориям</title>
       <link>http://127.0.0.1/media/sda1/scripts/xKartina/categoryList.php</link>
       <media:thumbnail url="/tmp/usbmounts/sda1/scripts/xKartina/img/kartina-logo.png" />
 </item>
 	
 <item>
-	<title>Kartina.TV</title>
+	<title>Kartina.TV - все категории</title>
 	<link>http://127.0.0.1/media/sda1/scripts/xKartina/showCategory.php</link>
 	<media:thumbnail url="/tmp/usbmounts/sda1/scripts/xKartina/img/kartina-logo2.png" />
 </item>
