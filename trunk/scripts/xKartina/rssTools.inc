@@ -203,8 +203,8 @@ function drawEpgTemplate($programs, $nowTime, $hasArchive, $openRef, $channelId,
     }
             
     $template = tmplReplace("nextDayTime",$nextPage ,$template);
-    
     $template = tmplReplace("id",$channelId ,$template);
+    $template = tmplReplace("archive",$hasArchive ? "A" : "",$template);
     
     $items = "";
     $index = 0;
@@ -230,6 +230,7 @@ function drawEpgItemTemplate($program, $nowTime, $hasArchive, $openRef,$channelI
     }
     $template = readLocalFile($templateFileName );
 
+    $class = "future";
     if ($program === $currentProgram) {
         $class="current";
         if ($hasArchive) {
@@ -257,26 +258,14 @@ function drawEpgItemTemplate($program, $nowTime, $hasArchive, $openRef,$channelI
     }
 
     $template = tmplReplace("XK_HOME",XK_HOME,$template);
-
     $template = tmplReplace("description",$program->details,$template);
-
     $template = tmplReplace("openRef",$openRef,$template);
-
     $template = tmplReplace("humanTime",$beginTimeHuman,$template);
-        
     $template = tmplReplace("name",$program->name,$template);
-
     $template = tmplReplace("id",$channelId,$template);
-    
     $template = tmplReplace("pageTitle",$channelId,$template);
-    
-    
-    if ($hasArchive) {
-        $template = tmplReplace("archive","A",$template);
-    }
-    else {
-        $template = tmplReplace("archive","",$template);
-    }
+    $template = tmplReplace("class",$class,$template);
+    $template = tmplReplace("archive",$hasArchive ? "A" : "",$template);
     
     return $template;
 }
