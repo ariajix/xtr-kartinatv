@@ -1,0 +1,30 @@
+<html>
+<body bgcolor="black">
+<div align="center">
+<table cellspacing="20">
+<tr>    
+<td align="center">
+    <image width="256" height="256" src="%%XK_HOME%%/img/kartina-logo.png" />
+</td>
+<td align="center">
+    <image width="256" height="256" src="%%XK_HOME%%/img/kartina-logo2.png" />
+</td>
+<td align="center">
+    <image width="256" height="256" src="%%XK_HOME%%/img/playlist.png" />
+</td>
+</tr>
+<tr>
+<td align="center">
+    <a href="%%XK_HOME%%/categoryList.php">Kartina.TV - по категориям</a>
+</td>
+<td align="center">
+    <a href="%%XK_HOME%%/showCategory.php">Kartina.TV - все категории</a>
+</td>
+<td align="center">
+    <a href="%%XK_HOME%%/showPlaylists.php">Плэйлисты</a>
+</td>
+</tr>
+</table>
+</div>
+</body>
+</html>

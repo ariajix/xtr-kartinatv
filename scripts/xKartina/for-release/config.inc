@@ -1,6 +1,7 @@
 <?php
 	require_once "auth.inc";
 
+
 	define("XK_HOME", "http://127.0.0.1/media/sda1/scripts/xKartina/");
 
 	define("TEMPLATE", "rss-default");
@@ -21,4 +22,5 @@
 	define("PLAYLIST_ITEM_TEMPLATE", "playlist_item.xml");
 
 	define("LOGIN_TEMPLATE", "login.xml");
+	define("START_TEMPLATE", "start.xml");
 ?>
