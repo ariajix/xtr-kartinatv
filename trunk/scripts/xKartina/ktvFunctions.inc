@@ -152,7 +152,7 @@ class KtvFunctions {
             if($this->isAuthorized($reply))
         		return $reply;    
         }
-        return null;
+        return $reply;
     }
 
     function getChannelsList() {
