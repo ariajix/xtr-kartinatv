@@ -21,12 +21,18 @@ class KtvFunctions {
     var $traces;
     var $cookie;
     var $authorizationErrorText;
-    
+    var $ini_array;
 
     function KtvFunctions($traces = false) {
         $this->traces = $traces;
         $this->cookie = isset($_SESSION[COOKIE_NAME]) ? 
             $_SESSION[COOKIE_NAME] : "";
+    
+        $iniPath = "auth.ini";
+    	// Parse without sections
+	    if ( is_readable($iniPath )) {
+	    	$this->ini_array = parse_ini_file($iniPath);	
+		}            
     }
 
     function forgetCookie() {
@@ -56,7 +62,7 @@ class KtvFunctions {
     }
     
     function authorize() {
-    	
+/*    	
     	$iniPath = "auth.ini";
     	// Parse without sections
 	    if ( is_readable($iniPath )) {
@@ -66,21 +72,22 @@ class KtvFunctions {
 		global $username;
 		global $password;
 		global $loginMsg;
-		if(!isset($ini_array['username'])) {
+*/		
+		if(!isset($this->ini_array['username'])) {
 			$username = USERNAME;
 		} else {
-			$username = $ini_array['username'];
+			$username = $this->ini_array['username'];
 		}
 		
-		if(!isset($ini_array['password'])) {
+		if(!isset($this->ini_array['password'])) {
 			$password = PASSWORD;
 		} else {
-			$password = $ini_array['password'];
+			$password = $this->ini_array['password'];
 		}
 		
 		
 		if( ($username >= '140' && $username <='149') && 
-			(!isset($ini_array['confirmed']) || $ini_array['confirmed'] != '1')) {
+			(!isset($this->ini_array['confirmed']) || $this->ini_array['confirmed'] != '1')) {
 			//first start with demo account
 			$loginMsg = "Вы пользуетесь пробным доступом. Введите свои данные или подтвердите пробный доступ кнопкой \"Вход\".";
 			$dialog = new LoginDialog();
@@ -159,7 +166,8 @@ class KtvFunctions {
             $url .= "&gmt=$time";
         }
         if (ALLOW_EROTIC) {
-            $url .= "&protect_code=" . PASSWORD;
+        	global $password;
+            $url .= "&protect_code=" . $this->ini_array["password"];
         }
         return $this->getData($url, "URL of stream $id");
     }
