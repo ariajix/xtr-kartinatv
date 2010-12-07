@@ -11,28 +11,35 @@ require_once "settings.inc";
 require_once "tools.inc";
 require_once "loginDialog.inc";
 
-		global $username;
-		global $password;
-		
 define("COOKIE_NAME", "KtvCookie");
 define("BASE_URL", "http://iptv.kartina.tv/");
 
 class KtvFunctions {
     var $traces;
     var $cookie;
+
     var $authorizationErrorText;
-    var $ini_array;
+
+    var $username;
+    var $password;
+    var $confirmed;
 
     function KtvFunctions($traces = false) {
         $this->traces = $traces;
-        $this->cookie = isset($_SESSION[COOKIE_NAME]) ? 
+        $this->cookie = isset($_SESSION[COOKIE_NAME]) ?
             $_SESSION[COOKIE_NAME] : "";
-    
+
         $iniPath = "auth.ini";
-    	// Parse without sections
-	    if ( is_readable($iniPath )) {
-	    	$this->ini_array = parse_ini_file($iniPath);	
-		}            
+        if (is_readable($iniPath)) {
+            $ini_array = parse_ini_file($iniPath);
+            $this->username  = $ini_array['username'];
+            $this->password  = $ini_array['password'];
+            $this->confirmed = true;
+        } else {
+            $this->username  = USERNAME;
+            $this->password  = PASSWORD;
+            $this->confirmed = false;
+        }
     }
 
     function forgetCookie() {
@@ -42,103 +49,77 @@ class KtvFunctions {
 
     function trace($msg) {
         if ($this->traces) {
-            print "DEBUG: " . USERNAME . ": $msg\n";
+            print "DEBUG: $this->username: $msg\n";
         }
     }
-    
-	function login($username, $password) {
+
+    function login($username, $password) {
         $this->trace("Authorization started");
+        $this->username = $username;
+        $this->password = $password;
         $params  = "act=login";
         $params .= "&code_login=" . $username;
         $params .= "&code_pass="  . $password;
         $html = getPageContentByPost(BASE_URL, $params);
         $this->cookie = parseOutCookies($html);
         if(!$this->isAuthorized($html)) {
-        	return FALSE;
+            return FALSE;
         }
         $this->trace("Authorization returned: $this->cookie");
         $_SESSION[COOKIE_NAME] = $this->cookie;
         return TRUE;
     }
-    
+
     function authorize() {
-/*    	
-    	$iniPath = "auth.ini";
-    	// Parse without sections
-	    if ( is_readable($iniPath )) {
-	    	$ini_array = parse_ini_file($iniPath);	
-		}
-		
-		global $username;
-		global $password;
-		global $loginMsg;
-*/		
-		if(!isset($this->ini_array['username'])) {
-			$username = USERNAME;
-		} else {
-			$username = $this->ini_array['username'];
-		}
-		
-		if(!isset($this->ini_array['password'])) {
-			$password = PASSWORD;
-		} else {
-			$password = $this->ini_array['password'];
-		}
-		
-		
-		if( ($username >= '140' && $username <='149') && 
-			(!isset($this->ini_array['confirmed']) || $this->ini_array['confirmed'] != '1')) {
-			//first start with demo account
-			$loginMsg = "Вы пользуетесь пробным доступом. Введите свои данные или подтвердите пробный доступ кнопкой \"Вход\".";
-			$dialog = new LoginDialog();
-			$dialog->showLogin($username, $password, $loginMsg);
-			exit;
-		} else {
-			if(!$this->login($username, $password)) {
-				//error by login
-				$loginMsg = 'Ошибка входа ('.$this->authorizationErrorText.'). Пожалуйста проверьте правильность абонемента и пароля.';
-				//header( 'Location: '.XK_HOME.'login.php') ;
-				$dialog = new LoginDialog();
-				$dialog->showLogin($username, $password, $loginMsg);
-				exit;
-			}
-			return TRUE;
-		}
+        if (! $this->confirmed) {
+            // first start with demo account
+            $loginMsg = "Вы пользуетесь пробным доступом. Введите свои данные или подтвердите пробный доступ кнопкой \"Вход\".";
+            $dialog = new LoginDialog();
+            $dialog->showLogin($this->username, $this->password, $loginMsg);
+            exit;
+        } else if (! $this->login($this->username, $this->password)) {
+            // error on login
+            $loginMsg = 'Ошибка входа ('.$this->authorizationErrorText.'). Пожалуйста проверьте правильность абонемента и пароля.';
+            $dialog = new LoginDialog();
+            $dialog->showLogin($this->username, $this->password, $loginMsg);
+            exit;
+        }
+        return TRUE;
     }
 
     function isAuthorized($reply) {
         $ok = isset($this->cookie) &&
             0 != strlen($this->cookie) &&
             false == strpos($this->cookie, "deleted") &&
-            false == strpos($reply, "code_login") && 
-            false == strpos($reply, "code_pass") && 
-            false == strpos($reply, "msg=access_denied") && 
+            false == strpos($reply, "code_login") &&
+            false == strpos($reply, "code_pass") &&
+            false == strpos($reply, "msg=access_denied") &&
             false == strpos($reply, "msg=auth_err");
         if (! $ok) {
             $this->trace("Authorization missed or lost");
-            $authorizationErrorText = $this->getAuthorizationError($reply);
+            $this->authorizationErrorText = $this->getAuthorizationError($reply);
         }
         else {
-        	$authorizationErrorText = "";
+            $this->authorizationErrorText = "";
         }
         return $ok;
     }
     function getAuthorizationError($reply) {
-    	if(strpos($this->cookie, "deleted")) {
-    		return "Аккаунт удалён";
-    	}
-    	if(strpos($this->cookie, "code_login")) {
-    		return "Наверный логин";
-    	}
-		if(strpos($this->cookie, "code_pass")) {
-    		return "Неверный пароль";
-    	}
-    	if(strpos($this->cookie, "msg=access_denied")) {
-    		return "Доступ запрещён";
-    	}
-    	if(strpos($this->cookie, "msg=auth_err")) {
-    		return "Ошибка авторизации";
-    	}
+        if(strpos($this->cookie, "deleted")) {
+            return "Аккаунт удалён";
+        }
+        if(strpos($this->cookie, "code_login")) {
+            return "Наверный логин";
+        }
+        if(strpos($this->cookie, "code_pass")) {
+            return "Неверный пароль";
+        }
+        if(strpos($this->cookie, "msg=access_denied")) {
+            return "Доступ запрещён";
+        }
+        if(strpos($this->cookie, "msg=auth_err")) {
+            return "Ошибка авторизации";
+        }
         return "Неизвестная ошибка";
     }
 
@@ -146,11 +127,11 @@ class KtvFunctions {
         $this->trace("Getting $name");
         $reply = getPageContentByGet($url, $this->cookie);
         if (! $this->isAuthorized($reply)) {
-            $this->authorize(); 
+            $this->authorize();
             $this->trace("Second try to get $name");
             $reply = getPageContentByGet($url, $this->cookie);
             if($this->isAuthorized($reply))
-        		return $reply;    
+                return $reply;
         }
         return $reply;
     }
@@ -166,12 +147,11 @@ class KtvFunctions {
             $url .= "&gmt=$time";
         }
         if (ALLOW_EROTIC) {
-        	global $password;
-            $url .= "&protect_code=" . $this->ini_array["password"];
+            $url .= "&protect_code=" . $this->password;
         }
         return $this->getData($url, "URL of stream $id");
     }
-    
+
     function getChannelsInfo($ids) {
         $param = "";
         foreach($ids as $id) {
@@ -186,7 +166,7 @@ class KtvFunctions {
     function getEpg($id, $date = null) {
         # date format is yymmdd: 981231
         # NOTE: at 03:00 starts another EPG day
-        $date = isset($date) ? date(EPG_DATE_FORMAT, $date) : 
+        $date = isset($date) ? date(EPG_DATE_FORMAT, $date) :
             date(EPG_DATE_FORMAT, NOW_TIME);
         $url  = BASE_URL;
         $url .= "?m=epg&act=show_day_xml&day=$date&cid=$id";
@@ -202,7 +182,7 @@ class KtvFunctions {
         $url  = BASE_URL;
         $url .= "?act=x_set_timeshift&m=clients&ts=$timeShift";
         return $this->getData($url, "(setting) time shift $timeShift");
-    }    
+    }
 
     function getBroadcastingServer() {
         $url = BASE_URL . "?m=clients&act=form_sserv";
@@ -214,6 +194,6 @@ class KtvFunctions {
         $url = BASE_URL;
         $url .= "?act=x_set_sserv&m=clients&ssrv=$server";
         return $this->getData($url, "(selecting) server $server");
-    }    
+    }
 }
 ?>
