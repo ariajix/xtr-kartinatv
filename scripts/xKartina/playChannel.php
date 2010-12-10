@@ -17,9 +17,10 @@ define("TMP_BACKGROUND", "/tmp/bg.jsp");
     $name   = urldecode($_GET['title']);
     $vid    = $_GET['vid'];
     $gmt    = $_GET['gmt'];
+    $pkey    = $_GET['pkey'];
     $ref    = isset($_GET['ref']) ? urldecode($_GET['ref']) : "index.php";
 
-    $content = $ktvFunctions->getStreamUrl($id, $gmt);
+    $content = $ktvFunctions->getStreamUrl($id, $gmt,$pkey);
     #$url = preg_replace('/.*url="(rtsp|http)(\/ts|)([^ "]*).*/s', '$1$3', $content);
  
 	ereg('://([^" ]*)', $content, $regs);

@@ -141,14 +141,17 @@ class KtvFunctions {
         return $this->getData($url, "channels list");
     }
 
-    function getStreamUrl($id, $time = null) {
+    function getStreamUrl($id, $time = null,$protect_code = null) {
         $url = BASE_URL . "?m=channels&act=get_stream_url&cid=$id";
         if (isset($time) && null != $time) {
             $url .= "&gmt=$time";
         }
         if (ALLOW_EROTIC) {
             $url .= "&protect_code=" . $this->password;
+        } else if (null != $protect_code) {
+            $url .= "&protect_code=" . $protect_code;
         }
+         
         return $this->getData($url, "URL of stream $id");
     }
 

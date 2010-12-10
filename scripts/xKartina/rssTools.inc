@@ -112,6 +112,8 @@ function drawChannelListTemplate($categories) {
             }
         }
     }
+    
+    $template = tmplReplace("ALLOW_EROTIC",ALLOW_EROTIC,$template);
     $template = tmplReplace("XK_HOME",XK_HOME,$template);
     $template = tmplReplace("menuItems",$menuItems,$template);
     return tmplReplace("items",$items,$template);
@@ -211,7 +213,7 @@ function drawEpgTemplate($programs, $nowTime, $hasArchive, $openRef, $channelId,
     $selectedIndex = 0;
     foreach ($programs as $program) {
         $items = $items.drawEpgItemTemplate($program, $nowTime, $hasArchive,
-        $openRef, $channelId,  $currentProgram);
+        									$openRef, $channelId, $currentProgram);
         
         if($currentProgram == $program) {
             $selectedIndex = $index;

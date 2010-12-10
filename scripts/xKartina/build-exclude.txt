@@ -5,4 +5,6 @@ img-work\
 rss-extended\
 category\
 for-release\
+black-fury\
+rss-black-fury*\
 *.m3u
