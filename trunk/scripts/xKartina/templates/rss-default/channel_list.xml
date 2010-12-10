@@ -78,16 +78,38 @@
 			userInput = currentUserInput();
 			if ( userInput == "R" ) {
 				url = getItemInfo(getFocusItemIndex(), "epg_link");
+				
+				
 				jumpToLink("epg_link");				
 				redrawDisplay();
 				"true";
-			} else {
-			if ( userInput == "1" ) {
+			} else if ( userInput == "1" ) {
 				streamlink = getItemInfo(-1, "link");
     			playItemURL(streamlink, 10, 16);
     			/*playItemURL("http://127.0.0.1/media/sda1/xKartina/playChannel.php?id=8", 0);*/
     			"true";
-			} else {
+			} else if ( userInput == "ENTR" ) {
+				curId = getItemInfo(getFocusItemIndex(), "id");
+				print("-------------------curID: ",curId );
+				if("1" != ALLOW_EROTIC &amp;&amp; (curId  == "257" || curId  == "155" || curId  == "159" || curId  == "161")) {
+				 	inputPass = getInput("passWord", "doModal");
+				 	print("-------------------inputPass : ",inputPass);
+	      			if (inputPass != NULL) {
+			      		url = getItemInfo(getFocusItemIndex(), "link") + "&amp;pkey=" + inputPass;
+			      		print("-------------------url : ",url);
+			      		playItemURL(url,0);
+						/*jumpToLink("epg_link");*/				
+						redrawDisplay();
+
+			      	}
+	      			redrawDisplay();
+	      			"true";				
+				}
+				else {
+					"false";
+				}
+
+      		} else {
 				"false";
 			}
 		</onUserInput>

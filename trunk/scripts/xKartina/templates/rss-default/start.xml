@@ -30,7 +30,7 @@
 </mediaDisplay>
 
 <channel>
-<title>xKartina v 0.7.2</title>
+<title>xKartina v 0.7.4</title>
 <item>
       <title>Kartina.TV - по категориям</title>
       <link>http://127.0.0.1/media/sda1/scripts/xKartina/categoryList.php</link>
@@ -42,6 +42,11 @@
     <link>http://127.0.0.1/media/sda1/scripts/xKartina/showCategory.php</link>
     <media:thumbnail url="/tmp/usbmounts/sda1/scripts/xKartina/img/kartina-logo2.png" />
 </item>
+<item>
+    <title>Установить время</title>
+    <link>http://127.0.0.1/media/sda1/scripts/xKartina/updateTime.php</link>
+    <media:thumbnail url="/tmp/usbmounts/sda1/scripts/xKartina/img/clock.png" />
+</item>	
 <item>
       <title>Плэйлисты</title>
       <link>http://127.0.0.1/media/sda1/scripts/xKartina/showPlaylists.php</link>
