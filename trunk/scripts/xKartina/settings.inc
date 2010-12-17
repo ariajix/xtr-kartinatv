@@ -21,9 +21,9 @@
 #define("USERNAME", "148");
 #define("PASSWORD", "841");
 
-# set this flag to TRUE if you want the adult channels to be available
-# and to FALSE if you want to disable it
-define("ALLOW_EROTIC", TRUE);
+# set this flag to TRUE if you want the adult channels to be available without password
+# and to FALSE if you want to ask for it
+define("ALLOW_EROTIC", FALSE);
 
 # video stream pre-bufferring size in Kb
 define("BUFFER_SIZE", 512);

@@ -121,9 +121,7 @@ function getEpg($id, $date) {
        
     } else {
         # generate link to open program URL
-        $openRef  = "playChannel.php?id=$id";
-        $openRef .= ! isset($_GET['number']) ? "" : "&number=" . $_GET['number'];
-        $openRef .= ! isset($_GET['title'])  ? "" : "&title="  . $_GET['title'];
+        $openRef  = "getStreamUrl.php?id=$id";
         $openRef .= ! isset($_GET['vid'])    ? "" : "&vid="    . $_GET['vid'];
     }
 

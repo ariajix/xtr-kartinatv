@@ -55,11 +55,50 @@
 				jumpToLink("epg_link");				
 				redrawDisplay();
 				"true";
-			} else {
-			if ( userInput == "PD" ) {
+			} else if ( userInput == "PD" ) {
 				url = "%%XK_HOME%%getEpg.php?id=%%id%%&amp;archiveTime=%%nextDayTime%%";
 				jumpToLink("epg_link");				
 				redrawDisplay();
+				"true";
+			} else if ( userInput == "ENTR" ) {
+
+				curId = "%%id%%";
+				if("1" != "%%ALLOW_EROTIC%%" &amp;&amp; (curId  == "257" || curId  == "155" || curId  == "159" || curId  == "161")) {
+
+					inputPassAge = getEnv("pkey_age");
+					inputPass = getEnv("pkey");
+					
+					passAge = date("%s") - inputPassAge;
+					
+					if(NULL == inputPass || passAge > %%EROTIC_PASS_LIFETIME%%) {
+						inputPass = getInput("passWord", "doModal");
+					}
+
+					if (inputPass != NULL) {
+			      		authUrl = getItemInfo(getFocusItemIndex(), "link") + "&amp;pkey=" + inputPass;
+						mUrl = getCSVFromURL(authUrl);
+
+						if(mUrl == "protected") {
+							setEnv("msg","Неверный пароль для защищённых каналов!");
+							url = "%%XK_HOME%%popup.php";
+							jumpToLink("epg_link");
+							redrawDisplay();
+						}
+						else {
+							setEnv("pkey",inputPass);
+							setEnv("pkey_age",date("%s"));
+							playItemURL(mUrl,0);
+							cancelIde();
+							redrawDisplay();
+						}
+			      	}
+	      			"true";
+
+				}	else {
+					playItemURL(getCSVFromURL(getItemInfo(getFocusItemIndex(), "link")),0);
+					redrawDisplay();
+				}
+
 				"true";
 			} else {
 				"false";
