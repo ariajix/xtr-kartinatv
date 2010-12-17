@@ -113,6 +113,7 @@ function drawChannelListTemplate($categories) {
         }
     }
     
+	$template = tmplReplace("EROTIC_PASS_LIFETIME",EROTIC_PASS_LIFETIME,$template);
     $template = tmplReplace("ALLOW_EROTIC",ALLOW_EROTIC,$template);
     $template = tmplReplace("XK_HOME",XK_HOME,$template);
     $template = tmplReplace("menuItems",$menuItems,$template);
@@ -159,7 +160,7 @@ function drawChannelItemTemplate($category, $channel, $temp = CHANNEL_ITEM_TEMPL
         $template = tmplReplace("endTime","",$template);    
     }
 
-    $linkUrl = XK_HOME."playChannel.php";
+    $linkUrl = XK_HOME."getStreamUrl.php";
     $linkUrl .= "?id=$channel->id";
     $linkUrl .= "&amp;vid=" . ($channel->isVideo ? 1 : 0);
     $template = tmplReplace("linkUrl",$linkUrl,$template);
@@ -204,6 +205,8 @@ function drawEpgTemplate($programs, $nowTime, $hasArchive, $openRef, $channelId,
         $nextPage = $nowTime;
     }
             
+	$template = tmplReplace("EROTIC_PASS_LIFETIME",EROTIC_PASS_LIFETIME,$template);
+    $template = tmplReplace("ALLOW_EROTIC",ALLOW_EROTIC,$template);
     $template = tmplReplace("nextDayTime",$nextPage ,$template);
     $template = tmplReplace("id",$channelId ,$template);
     $template = tmplReplace("archive",$hasArchive ? "A" : "",$template);
@@ -351,6 +354,24 @@ function drawPlayListItemTemplate($item) {
     $template = tmplReplace("length",$item->length,$template);
     $template = tmplReplace("uri",$item->uri,$template);
     
+    return $template; 
+}
+
+function drawPopupTemplate($msg) {
+    $templateFileName = "templates/".TEMPLATE."/".POPUP_TEMPLATE;
+    // file should exist
+    if (! is_readable($templateFileName )) {
+        return;
+    }
+    $template = readLocalFile($templateFileName );
+    
+    $template = tmplReplace("XK_HOME",XK_HOME,$template);
+    $template = tmplReplace("msg",$msg,$template);
+/*    
+    foreach($params as $key => $value) { 
+    	$template = tmplReplace($key,$value,$template);
+    }
+*/
     return $template; 
 }
 ?>

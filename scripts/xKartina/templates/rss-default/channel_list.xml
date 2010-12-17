@@ -78,8 +78,6 @@
 			userInput = currentUserInput();
 			if ( userInput == "R" ) {
 				url = getItemInfo(getFocusItemIndex(), "epg_link");
-				
-				
 				jumpToLink("epg_link");				
 				redrawDisplay();
 				"true";
@@ -89,25 +87,42 @@
     			/*playItemURL("http://127.0.0.1/media/sda1/xKartina/playChannel.php?id=8", 0);*/
     			"true";
 			} else if ( userInput == "ENTR" ) {
+			
 				curId = getItemInfo(getFocusItemIndex(), "id");
-				print("-------------------curID: ",curId );
-				if("1" != ALLOW_EROTIC &amp;&amp; (curId  == "257" || curId  == "155" || curId  == "159" || curId  == "161")) {
-				 	inputPass = getInput("passWord", "doModal");
-				 	print("-------------------inputPass : ",inputPass);
-	      			if (inputPass != NULL) {
-			      		url = getItemInfo(getFocusItemIndex(), "link") + "&amp;pkey=" + inputPass;
-			      		print("-------------------url : ",url);
-			      		playItemURL(url,0);
-						/*jumpToLink("epg_link");*/				
-						redrawDisplay();
 
+				if("1" != "%%ALLOW_EROTIC%%" &amp;&amp; (curId  == "257" || curId  == "155" || curId  == "159" || curId  == "161")) {
+
+					inputPassAge = getEnv("pkey_age");
+					inputPass = getEnv("pkey");
+					if(NULL == inputPass || date("%s") - inputPassAge > %%EROTIC_PASS_LIFETIME%%) {
+						inputPass = getInput("passWord", "doModal");
+					}
+	      			if (inputPass != NULL) {
+			      		authUrl = getItemInfo(getFocusItemIndex(), "link") + "&amp;pkey=" + inputPass;
+						mUrl = getCSVFromURL(authUrl);
+						if(mUrl == "protected") {
+							setEnv("msg","Неверный пароль для защищённых каналов!");
+							url = "%%XK_HOME%%popup.php";
+							jumpToLink("epg_link");
+							redrawDisplay();
+						}
+						else {
+							/*save pwd*/
+							setEnv("pkey",inputPass);
+							setEnv("pkey_age",date("%s"));
+							playItemURL(mUrl,0);
+							cancelIde();
+							redrawDisplay();
+						}
 			      	}
-	      			redrawDisplay();
 	      			"true";				
 				}
 				else {
-					"false";
+					playItemURL(getCSVFromURL(getItemInfo(getFocusItemIndex(), "link")),0);
+					redrawDisplay();
+					"true";
 				}
+				"true";
 
       		} else {
 				"false";

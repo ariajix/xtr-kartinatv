@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+	<mediaDisplay 
+		name="onePartView" 
+		
+	 	viewAreaXPC="30"
+	    viewAreaYPC="30"
+	    viewAreaWidthPC="40"
+	    viewAreaHeightPC="20"
+    		
+		showDefaultInfo="no"
+		autoSelectMenu="no" 
+		autoSelectItem="no" 
+		showHeader="no" 
+		itemPerPage="1"
+
+		itemXPC="55"
+		itemYPC="35"
+		itemWidthPC="20" 
+		itemHeightPC="8" 
+		itemGap="0"
+
+
+		sideLeftWidthPC="100" 
+		sideRightWidthPC="0" 
+		itemBackgroundColor="0:0:0"
+		backgroundColor="0:0:0"
+		itemImageXPC="34.6" 
+		itemImageWidthPC="0"
+		itemImageHeightPC="0">
+		<idleImage>image/POPUP_LOADING_01.jpg</idleImage>
+		<idleImage>image/POPUP_LOADING_02.jpg</idleImage>
+		<idleImage>image/POPUP_LOADING_03.jpg</idleImage>
+		<idleImage>image/POPUP_LOADING_04.jpg</idleImage>
+		<idleImage>image/POPUP_LOADING_05.jpg</idleImage>
+		<idleImage>image/POPUP_LOADING_06.jpg</idleImage>
+		
+		<text offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100"
+			backgroundColor="50:50:50" cornerRounding="15" />
+
+		<text offsetXPC="1" offsetYPC="1.5" widthPC="98" heightPC="97.3"
+			backgroundColor="20:20:20" cornerRounding="15" />
+
+		<text offsetXPC="20" offsetYPC="15" widthPC="60" heightPC="75" lines="5"
+			fontSize="14" backgroundColor="20:20:20"><script>
+				    getEnv("msg");
+				</script></text>
+
+
+		<text align="center" offsetXPC="30" offsetYPC="75" widthPC="40"
+			heightPC="20" fontSize="16" cornerRounding="5" backgroundColor="180:80:10" foregroundColor="0:0:0" >Ok</text>
+		
+	</mediaDisplay>
+
+	<channel>
+		<item>
+			<title>Ok</title>
+			<onClick>
+				<script>
+				    postMessage("RET"); 
+				    null;
+				</script>
+   			</onClick>
+		</item>
+	</channel>
+</rss>
