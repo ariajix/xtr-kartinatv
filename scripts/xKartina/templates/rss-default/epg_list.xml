@@ -61,7 +61,7 @@
 				redrawDisplay();
 				"true";
 			} else if ( userInput == "ENTR" ) {
-
+				showIdle();
 				curId = "%%id%%";
 				if("1" != "%%ALLOW_EROTIC%%" &amp;&amp; (curId  == "257" || curId  == "155" || curId  == "159" || curId  == "161")) {
 
@@ -88,7 +88,6 @@
 							setEnv("pkey",inputPass);
 							setEnv("pkey_age",date("%s"));
 							playItemURL(mUrl,0);
-							cancelIde();
 							redrawDisplay();
 						}
 			      	}

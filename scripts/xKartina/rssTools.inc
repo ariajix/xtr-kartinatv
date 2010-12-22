@@ -135,21 +135,23 @@ function drawChannelItemTemplate($category, $channel, $temp = CHANNEL_ITEM_TEMPL
     
     $template = readLocalFile($templateFileName );
 
-    $template = tmplReplace("category",$category->name,$template);
     $template = tmplReplace("XK_HOME",XK_HOME,$template);
     $template = tmplReplace("name",$name,$template);
     $template = tmplReplace("number",$channel->number,$template);
     $template = tmplReplace("id",$channel->id,$template);
     $template = tmplReplace("color",$channel->color,$template);
     $template = tmplReplace("program",$channel->program,$template);
-    
+	$template = tmplReplace("category",$category->name,$template);
+	$template = tmplReplace("category_id",$category->id,$template);
+
+	$localTime = (time() + $_SESSION["DATE_DIFF"]);
     if (isset($channel->beginTime) && isset($channel->endTime)) {
         $template = tmplReplace("beginTime",$channel->beginTime,$template);
         $template = tmplReplace("endTime",$channel->endTime,$template);    
         $template = tmplReplace("humanTimeFromTo",date('H:i', $channel->beginTime) . " - ".date('H:i', $channel->endTime),$template);
 
         $full = ($channel->endTime - $channel->beginTime);
-        $curr = time() - $channel->beginTime;
+        $curr = $localTime - $channel->beginTime;
         $percent = 0 == $full ? 0 : (int) ($curr * 100 / $full);
         $template = tmplReplace("progress", $percent, $template);
     }
@@ -176,6 +178,8 @@ function drawEpgTemplate($programs, $nowTime, $hasArchive, $openRef, $channelId,
     if (! is_readable($templateFileName)) {
         return;
     }
+	
+    $localTime = (time() + $_SESSION["DATE_DIFF"]);
 
     $template = readLocalFile($templateFileName);
     
@@ -198,7 +202,7 @@ function drawEpgTemplate($programs, $nowTime, $hasArchive, $openRef, $channelId,
     $time += 24 * 60 * 60;
     $time = mktime(0, 0, 1,
     date("n", $time), date("j", $time), date("Y", $time));
-    if($time < time()) {
+    if($time < $localTime ) {
         $nextPage = $time + EPG_START_OFFSET;
     }
     else {

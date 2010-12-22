@@ -30,7 +30,8 @@
 </mediaDisplay>
 
 <channel>
-<title>xKartina v 0.7.4</title>
+<title>xKartina v 0.7.5</title>
+%%items%%
 <item>
       <title>Kartina.TV - по категориям</title>
       <link>http://127.0.0.1/media/sda1/scripts/xKartina/categoryList.php</link>

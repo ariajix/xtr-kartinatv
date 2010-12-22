@@ -7,7 +7,7 @@ require_once "ktvFunctions.inc";
 
 # decide whether chanels list update is needed
 if (! isset($_SESSION['channelsList']) || ! isset($_SESSION['lastUpdate']) ||
-    NOW_TIME - $_SESSION['lastUpdate'] > CL_UPDATE_INTERVAL) 
+    time() - $_SESSION['lastUpdate'] > CL_UPDATE_INTERVAL) 
 {
 	
 	
@@ -18,7 +18,7 @@ if (! isset($_SESSION['channelsList']) || ! isset($_SESSION['lastUpdate']) ||
 
     # remember new state
     $_SESSION['channelsList'] = $rawList;
-    $_SESSION['lastUpdate'] = NOW_TIME;
+    $_SESSION['lastUpdate'] = time();
 } else {
     # use remembered list
     $rawList = $_SESSION['channelsList'];

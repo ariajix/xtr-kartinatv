@@ -12,7 +12,7 @@ require_once "ktvFunctions.inc";
 define("EPG_START_OFFSET", 3 * 60 * 60);
 
 $id = $_GET['id'];
-$nowTime = NOW_TIME;
+$nowTime = (time() + $_SESSION["DATE_DIFF"]);
 
 $arcTime = isset($_GET['archiveTime']) ? $_GET['archiveTime'] : $nowTime;
 
