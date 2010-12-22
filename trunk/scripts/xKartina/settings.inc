@@ -103,8 +103,8 @@ date_default_timezone_set('Europe/Berlin');
 	#update hw clock
 	system("hwclock -w");
 }*/
-define("NOW_TIME", time());	
-define("TIME_STRING", date(DATE_RFC822));
+//define("NOW_TIME", time());	
+//define("TIME_STRING", date(DATE_RFC822));
 
 # date format accepted by EPG
 define("EPG_DATE_FORMAT", 'dmy');

@@ -137,6 +137,13 @@ class ChannelsParser extends AbstractParser {
                         $attr['ID'], $attr['TITLE'], $attr['COLOR']);
                 
                     $this->categories[] = $category;
+                } else if ('CHANNELS' == $xmlElem['tag']) {
+                	$clientTime = $xmlElem['attributes']['CLIENTTIME'];
+					$dateClient= DateTime::createFromFormat ("M d, Y H:i:s", $clientTime);
+					$dateLocal = new DateTime();
+
+					$secondsDiff = $dateClient->getTimestamp() - $dateLocal->getTimestamp();
+					$_SESSION["DATE_DIFF"] = $secondsDiff; 
                 }
             }
             else if ('complete' == $xmlElem['type']) {
@@ -205,9 +212,10 @@ class ProgramsParser extends AbstractParser {
             }
         }
 
+        $nowTime = (time() + $_SESSION["DATE_DIFF"]);
         # archive is limited by two weeks back
         if ($this->hasArchive && count($this->programs) > 0 && 
-            $this->programs[0]->beginTime + 14 * 24 * 60 * 60 < NOW_TIME)
+            $this->programs[0]->beginTime + 14 * 24 * 60 * 60 < $nowTime)
         {
             $this->hasArchive = false;
         }
