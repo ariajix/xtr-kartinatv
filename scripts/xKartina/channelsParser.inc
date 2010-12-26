@@ -7,7 +7,6 @@
 # Author: consros 2010                                                      #
 #############################################################################
 
-require_once("pageTools.inc");
 require_once("settings.inc");
 
 class Program {
@@ -72,8 +71,7 @@ class Category {
 class AbstractParser {
     function parseFile($filename) {
         if (! ($fp = fopen($filename, "r"))) {
-            dieOnError(LANG_ERR_FILE_READ . ": " . $filename, 
-                "img/errors/read-error.png");
+            die(LANG_ERR_FILE_READ . ": " . $filename);
         }
         $data = fread($fp, filesize($filename));
         fclose($fp);
@@ -81,7 +79,7 @@ class AbstractParser {
     }
 
     function dieOnWrongElement($xmlElem) {
-        dieOnError(reportWrongElement($xmlElem));
+        die(reportWrongElement($xmlElem));
     }
 
     function reportWrongElement($xmlElem) {
@@ -138,12 +136,12 @@ class ChannelsParser extends AbstractParser {
                 
                     $this->categories[] = $category;
                 } else if ('CHANNELS' == $xmlElem['tag']) {
-                	$clientTime = $xmlElem['attributes']['CLIENTTIME'];
-					$dateClient= DateTime::createFromFormat ("M d, Y H:i:s", $clientTime);
-					$dateLocal = new DateTime();
+                    $clientTime = $xmlElem['attributes']['CLIENTTIME'];
+                    $dateClient= DateTime::createFromFormat ("M d, Y H:i:s", $clientTime);
+                    $dateLocal = new DateTime();
 
-					$secondsDiff = $dateClient->getTimestamp() - $dateLocal->getTimestamp();
-					$_SESSION["DATE_DIFF"] = $secondsDiff; 
+                    $secondsDiff = $dateClient->getTimestamp() - $dateLocal->getTimestamp();
+                    $_SESSION["DATE_DIFF"] = $secondsDiff; 
                 }
             }
             else if ('complete' == $xmlElem['type']) {
