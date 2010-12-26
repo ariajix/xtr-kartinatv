@@ -1,5 +1,4 @@
 <?php
-#require_once "pageTools.inc";
 require_once "config.inc";
 require_once "tools.inc";
 require_once "ktvFunctions.inc";
