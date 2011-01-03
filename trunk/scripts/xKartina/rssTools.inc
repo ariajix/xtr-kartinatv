@@ -116,6 +116,7 @@ function drawChannelListTemplate($categories) {
 	$template = tmplReplace("EROTIC_PASS_LIFETIME",EROTIC_PASS_LIFETIME,$template);
     $template = tmplReplace("ALLOW_EROTIC",ALLOW_EROTIC,$template);
     $template = tmplReplace("XK_HOME",XK_HOME,$template);
+	$template = tmplReplace("XK_REAL_PATH",XK_REAL_PATH,$template);
     $template = tmplReplace("menuItems",$menuItems,$template);
     return tmplReplace("items",$items,$template);
 }
@@ -178,7 +179,7 @@ function drawEpgTemplate($programs, $nowTime, $hasArchive, $openRef, $channelId,
     if (! is_readable($templateFileName)) {
         return;
     }
-	
+
     $localTime = (time() + $_SESSION["DATE_DIFF"]);
 
     $template = readLocalFile($templateFileName);

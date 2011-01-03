@@ -8,6 +8,7 @@
     # define("XK_HOME", "http://127.0.0.1/media/sda1/scripts/xKartina/");
     define("XK_HOME", "http://" . $_SERVER['SERVER_ADDR'] . 
         dirname($_SERVER['SCRIPT_NAME']) . "/");
+	define("XK_REAL_PATH", realpath(dirname(__FILE__)).'/');
 
    	/*password for protected channels expires in 10 min*/
     define("EROTIC_PASS_LIFETIME", 10*60);
